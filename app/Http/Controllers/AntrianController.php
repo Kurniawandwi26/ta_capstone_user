@@ -30,6 +30,17 @@ class AntrianController extends Controller
      */
     public function create()
     {
+        // Cek apakah user sudah punya antrian aktif
+        $existingAntrian = Antrian::where('user_id', Auth::id())
+                                 ->whereIn('status', ['menunggu', 'dipanggil'])
+                                 ->first();
+
+        if ($existingAntrian) {
+            return redirect()->route('antrian.index')->withErrors([
+                'error' => 'Anda masih memiliki antrian aktif. Harap batalkan atau selesaikan antrian tersebut terlebih dahulu.'
+            ]);
+        }
+
         $doctors = Doctor::all();
         $poli = DB::table('poli')->get();
         

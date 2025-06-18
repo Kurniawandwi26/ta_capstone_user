@@ -52,11 +52,12 @@
         <nav id="navmenu" class="navmenu">
           <ul>
             <li><a href="/login">Login</a></li>
+            <li><a class="cta-btn btn btn-primary" href="/register">Ambil Antrean</a></li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <a class="cta-btn d-none d-sm-block" href="{{ route('register') }}">Ambil Antrean</a>
+        
 
       </div>
 

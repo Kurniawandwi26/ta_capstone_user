@@ -27,7 +27,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 2000; /* Higher than filter dropdown */
     height: 70px;
 }
 
@@ -86,6 +86,7 @@ body {
     min-width: 180px;
     padding: 10px 0;
     display: none;
+    z-index: 2001; /* Higher than navbar */
 }
 
 .dropdown-menu.show {
@@ -124,6 +125,7 @@ body {
     border-right: 1px solid #ecf0f1;
     padding: 20px 0;
     overflow-y: auto;
+    z-index: 1900; /* Lower than navbar but higher than content */
 }
 
 .nav-section {
@@ -363,11 +365,15 @@ body {
     .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s ease;
+        z-index: 2500; /* Higher than all content on mobile */
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
     }
     
     .sidebar.open {
         transform: translateX(0);
     }
+    
+    /* HAPUS SIDEBAR OVERLAY - TIDAK PERLU OVERLAY GELAP */
     
     .main-content {
         margin-left: 0;
@@ -479,9 +485,14 @@ body {
     </div>
 </aside>
 
+<!-- HAPUS SIDEBAR OVERLAY - TIDAK PERLU -->
+
 <script>
 function toggleSidebar() {
-    document.getElementById('sidebar').classList.toggle('open');
+    const sidebar = document.getElementById('sidebar');
+    sidebar.classList.toggle('open');
+    
+    // HAPUS SEMUA KODE OVERLAY - TIDAK PERLU
 }
 
 function toggleDropdown(event) {
@@ -501,6 +512,8 @@ document.addEventListener('DOMContentLoaded', function() {
             link.classList.add('active');
         }
     });
+    
+    // HAPUS EVENT LISTENER OVERLAY - TIDAK PERLU
 });
 
 // Close dropdown when clicking outside
@@ -523,6 +536,7 @@ document.addEventListener('click', function(e) {
         !toggle.contains(e.target) &&
         sidebar.classList.contains('open')) {
         sidebar.classList.remove('open');
+        // HAPUS OVERLAY CLOSE - TIDAK PERLU
     }
 });
 </script>

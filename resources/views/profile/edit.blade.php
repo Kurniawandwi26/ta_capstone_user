@@ -52,106 +52,81 @@
                 </h6>
                 
                 <div class="form-grid">
-                    <!-- Nama Lengkap -->
+                    <!-- Nama Lengkap - READONLY -->
                     <div class="form-group">
-                        <label for="name" class="form-label">Nama Lengkap *</label>
+                        <label for="name" class="form-label">Nama Lengkap</label>
                         <input type="text" 
-                               class="form-input @error('name') is-invalid @enderror" 
+                               class="form-input readonly-input" 
                                id="name" 
                                name="name" 
-                               value="{{ old('name', $user->name) }}" 
-                               required>
-                        @error('name')
-                            <div class="form-error">{{ $message }}</div>
-                        @enderror
+                               value="{{ old('name', Auth::user()->name) }}" 
+                               readonly>
                     </div>
 
                     <!-- Email -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email *</label>
                         <input type="email" 
-                               class="form-input @error('email') is-invalid @enderror" 
+                               class="form-input readonly-input"
                                id="email" 
                                name="email" 
                                value="{{ old('email', $user->email) }}" 
-                               required>
-                        @error('email')
-                            <div class="form-error">{{ $message }}</div>
-                        @enderror
+                               readonly>
                     </div>
 
                     <!-- Nomor Telepon -->
                     <div class="form-group">
                         <label for="phone" class="form-label">Nomor Telepon *</label>
                         <input type="text" 
-                               class="form-input @error('phone') is-invalid @enderror" 
+                               class="form-input readonly-input" 
                                id="phone" 
                                name="phone" 
                                value="{{ old('phone', $user->phone) }}" 
-                               placeholder="08123456789"
-                               required>
-                        @error('phone')
-                            <div class="form-error">{{ $message }}</div>
-                        @enderror
+                               readonly>
                     </div>
 
                     <!-- Nomor KTP -->
                     <div class="form-group">
                         <label for="nomor_ktp" class="form-label">No. KTP *</label>
                         <input type="text" 
-                               class="form-input @error('nomor_ktp') is-invalid @enderror" 
+                               class="form-input readonly-input" 
                                id="nomor_ktp" 
                                name="nomor_ktp" 
                                value="{{ old('nomor_ktp', $user->nomor_ktp) }}" 
-                               placeholder="1234567891234567"
                                maxlength="16"
-                               required>
-                        @error('nomor_ktp')
-                            <div class="form-error">{{ $message }}</div>
-                        @enderror
+                               readonly>
                     </div>
 
                     <!-- Tanggal Lahir -->
                     <div class="form-group">
                         <label for="birth_date" class="form-label">Tanggal Lahir *</label>
                         <input type="date" 
-                               class="form-input @error('birth_date') is-invalid @enderror" 
+                               class="form-input readonly-input" 
                                id="birth_date" 
                                name="birth_date" 
                                value="{{ old('birth_date', $user->birth_date ? $user->birth_date->format('Y-m-d') : '') }}"
-                               required>
-                        @error('birth_date')
-                            <div class="form-error">{{ $message }}</div>
-                        @enderror
+                               readonly>
                     </div>
 
                     <!-- Alamat -->
                     <div class="form-group full-width">
                         <label for="address" class="form-label">Alamat *</label>
                         <textarea class="form-textarea @error('address') is-invalid @enderror" 
-                                  id="address" 
-                                  name="address" 
-                                  rows="3" 
-                                  placeholder="Masukkan alamat lengkap"
-                                  required>{{ old('address', $user->address) }}</textarea>
+                                id="address" 
+                                name="address" 
+                                rows="3" 
+                                placeholder="Masukkan alamat lengkap"
+                                readonly>{{ old('address', $user->address) }}</textarea>
                         @error('address')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
+
+                        <small class="form-text text-danger">Jika ingin merubah data diri, silakan hubungi admin.</small>
                     </div>
+
                 </div>
             </div>
 
-            <!-- Submit Button -->
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-lg" id="profileBtn">
-                    <i class="fas fa-save"></i>
-                    Simpan Perubahan
-                </button>
-                <a href="/dashboard" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i>
-                    Kembali
-                </a>
-            </div>
         </form>
     </div>
 
@@ -257,6 +232,24 @@
 .page-header p {
     color: #7f8c8d;
     margin: 0;
+}
+
+.readonly-input {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    border-color: #dee2e6 !important;
+    cursor: not-allowed !important;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.form-textarea {
+    background-color: #f8f9fa !important;
+    color: #6c757d !important;
+    border-color: #dee2e6 !important;
+    cursor: not-allowed !important;
+    opacity: 0.8;
+    pointer-events: none;
 }
 
 .alert {
