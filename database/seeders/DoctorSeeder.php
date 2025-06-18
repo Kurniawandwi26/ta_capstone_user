@@ -10,7 +10,7 @@ class DoctorSeeder extends Seeder
     public function run()
     {
         Doctor::updateOrCreate(
-            ['id' => 'D001'],
+            ['doctor_id' => 'D001'],
             [
                 'nama' => 'Dr. Arief Budiman',
                 'spesialisasi' => 'Dokter Umum',
@@ -22,7 +22,7 @@ class DoctorSeeder extends Seeder
         );
 
         Doctor::updateOrCreate(
-            ['id' => 'D002'],
+            ['doctor_id' => 'D002'],
             [
                 'nama' => 'Dr. Batari Nandini',
                 'spesialisasi' => 'Dokter Kebidanan',

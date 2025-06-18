@@ -22,12 +22,7 @@ class PoliSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
-            [
-                'poli_id' => 'P003',
-                'nama'    => 'Gigi',
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
+            
         ]);
     }
 }

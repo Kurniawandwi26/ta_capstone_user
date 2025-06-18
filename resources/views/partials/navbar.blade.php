@@ -1,431 +1,528 @@
- <style>
+<style>
 /* ============================================================================ */
-/* ENHANCED STYLING - CSS BERSIH */
+/* SIMPLE CLEAN DASHBOARD - BACK TO BASICS */
 /* ============================================================================ */
 
-/* Import Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Import font yang bagus */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
-    display: flex;
-    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    background: #f5f6fa;
     margin: 0;
-    flex-direction: column;
-    font-family: 'Inter', sans-serif;
-    background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-}
-
-.wrapper {
-    display: flex;
-    flex: 1;
+    padding: 0;
 }
 
 /* ============================================================================ */
-/* ENHANCED SIDEBAR */
-/* ============================================================================ */
-.sidebar {
-    width: 250px;
-    background: linear-gradient(180deg, #1e40af 0%, #1e3a8a 50%, #1e293b 100%);
-    color: rgb(255, 255, 255);
-    padding: 20px;
-    height: 100%;
-    border-top: 3px solid rgba(59, 130, 246, 0.3);
-    border-right: 3px solid rgba(59, 130, 246, 0.2);
-    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
-    position: relative;
-    overflow-y: auto;
-}
-
-.sidebar::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 1px;
-    height: 100%;
-    background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-}
-
-.sidebar .nav-link {
-    color: rgba(255, 255, 255, 0.9);
-    padding: 12px 15px;
-    text-decoration: none;
-    border-radius: 8px;
-    margin: 2px 0;
-    transition: all 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    position: relative;
-    overflow: hidden;
-}
-
-.sidebar .nav-link::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 3px;
-    height: 100%;
-    background: linear-gradient(135deg, #60a5fa, #06b6d4);
-    transform: scaleY(0);
-    transition: transform 0.3s ease;
-}
-
-.sidebar .nav-link:hover {
-    background: rgba(59, 130, 246, 0.2);
-    color: #bfdbfe;
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
-
-.sidebar .nav-link:hover::before {
-    transform: scaleY(1);
-}
-
-.sidebar .nav-item {
-    margin-bottom: 8px;
-}
-
-.sidebar .nav-item .nav-link.active {
-    background: linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(6, 182, 212, 0.2));
-    color: #bfdbfe;
-    transform: translateX(5px);
-    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
-}
-
-.sidebar .nav-item .nav-link.active::before {
-    transform: scaleY(1);
-}
-
-/* ============================================================================ */
-/* ENHANCED TOP NAVIGATION */
+/* TOP NAVBAR - SIMPLE & CLEAN */
 /* ============================================================================ */
 .top-nav {
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #06b6d4 100%);
-    padding: 12px 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    height: 70px;
 }
 
-.top-nav .navbar-nav .nav-link {
-    color: rgba(255, 255, 255, 0.95);
+.logo-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-section img {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.user-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-welcome {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
     font-weight: 500;
-    transition: all 0.3s ease;
-}
-
-.top-nav .navbar-nav .nav-link:hover {
-    color: #fbbf24;
-    transform: translateY(-1px);
-}
-
-/* ============================================================================ */
-/* ENHANCED LOGO STYLING - LEBIH TERLIHAT */
-/* ============================================================================ */
-.top-nav img {
-    width: 70px !important;
-    height: 70px !important;
-    object-fit: cover !important;
-    border-radius: 15px !important;
-    border: 4px solid rgba(255, 255, 255, 0.4) !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4) !important;
-    transition: all 0.3s ease !important;
-    margin-bottom: 0 !important;
-    margin-right: 15px !important;
-}
-
-.top-nav img:hover {
-    transform: scale(1.08) rotate(3deg);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5) !important;
-    border-color: rgba(255, 255, 255, 0.6) !important;
-}
-
-/* ============================================================================ */
-/* ENHANCED USER SECTION */
-/* ============================================================================ */
-.navbar-text {
-    color: rgba(255, 255, 255, 0.95) !important;
-    font-weight: 500 !important;
-    font-size: 0.95rem !important;
+    cursor: pointer;
+    position: relative;
 }
 
 .dropdown-menu {
-    background: white !important;
-    border: none !important;
-    border-radius: 12px !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
-    margin-top: 8px !important;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    min-width: 180px;
+    padding: 10px 0;
+    display: none;
+}
+
+.dropdown-menu.show {
+    display: block;
 }
 
 .dropdown-item {
-    padding: 0.75rem 1.25rem !important;
-    color: #374151 !important;
-    transition: all 0.3s ease !important;
-    border-radius: 8px !important;
-    margin: 2px 8px !important;
+    padding: 10px 15px;
+    color: #2c3e50;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
 }
 
 .dropdown-item:hover {
-    background: #f3f4f6 !important;
-    color: #1f2937 !important;
-    transform: translateX(5px);
+    background: #f8f9fa;
 }
 
-.dropdown-item.text-danger:hover {
-    background: #fef2f2 !important;
-    color: #dc2626 !important;
-}
-
-/* ============================================================================ */
-/* ENHANCED MAIN CONTENT */
-/* ============================================================================ */
-.main-content {
-    flex-grow: 1;
-    padding: 25px;
-    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-    min-height: calc(100vh - 80px);
+.dropdown-item.logout:hover {
+    background: #fee;
+    color: #e74c3c;
 }
 
 /* ============================================================================ */
-/* ENHANCED SIDEBAR TITLES */
+/* SIDEBAR - SIMPLE & CLEAN */
 /* ============================================================================ */
-.bold-text {
-    font-weight: 700;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.75rem;
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 70px;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background: white;
+    border-right: 1px solid #ecf0f1;
+    padding: 20px 0;
+    overflow-y: auto;
+}
+
+.nav-section {
+    margin-bottom: 30px;
+}
+
+.nav-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #bdc3c7;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 1rem;
-    margin-top: 1.5rem;
-    padding-left: 10px;
-    border-left: 3px solid rgba(59, 130, 246, 0.5);
+    padding: 0 20px;
+    margin-bottom: 15px;
 }
 
-.bold-text:first-child {
-    margin-top: 0;
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-/* ============================================================================ */
-/* ENHANCED CARDS & COMPONENTS */
-/* ============================================================================ */
-.card {
+.nav-item {
+    margin-bottom: 5px;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px 20px;
+    color: #7f8c8d;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+    padding-left: 25px;
+}
+
+.nav-link.active {
+    background: linear-gradient(90deg, #3498db, #2980b9);
+    color: white;
+    border-radius: 0 25px 25px 0;
+    margin-right: 10px;
+}
+
+.nav-link i {
+    width: 20px;
     text-align: center;
-    margin-bottom: 20px;
-    padding: 25px;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
 }
 
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+/* ============================================================================ */
+/* MAIN CONTENT - SIMPLE & CLEAN */
+/* ============================================================================ */
+.main-content {
+    margin-left: 250px;
+    margin-top: 70px;
+    padding: 30px;
+    min-height: calc(100vh - 70px);
 }
 
-.card-header {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #1f2937;
+/* ============================================================================ */
+/* CARDS - SIMPLE & CLEAN */
+/* ============================================================================ */
+.welcome-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    text-align: center;
 }
 
-.antrean-status {
+.welcome-card h1 {
     font-size: 2rem;
-    font-weight: 700;
-    color: #1e40af;
-}
-
-.btn-next {
-    margin-top: 20px;
     font-weight: 600;
-    border-radius: 8px;
-    padding: 10px 20px;
-    transition: all 0.3s ease;
+    margin-bottom: 10px;
 }
 
-.btn-next:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.welcome-card p {
+    font-size: 1.1rem;
+    opacity: 0.9;
 }
 
-.badge {
-    font-size: 0.85rem;
-    padding: 0.35em 0.65em;
-    border-radius: 6px;
+.stats-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.stat-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+    border-left: 5px solid;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-card.blue { border-left-color: #3498db; }
+.stat-card.green { border-left-color: #27ae60; }
+.stat-card.orange { border-left-color: #f39c12; }
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    font-size: 24px;
+    color: white;
+}
+
+.stat-icon.blue { background: linear-gradient(45deg, #3498db, #2980b9); }
+.stat-icon.green { background: linear-gradient(45deg, #27ae60, #229954); }
+.stat-icon.orange { background: linear-gradient(45deg, #f39c12, #e67e22); }
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    color: #7f8c8d;
+    font-size: 14px;
     font-weight: 500;
 }
 
-.badge-primary {
-    background: linear-gradient(135deg, #3b82f6, #1e40af);
+.content-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 25px;
 }
 
-.badge-success {
-    background: linear-gradient(135deg, #10b981, #059669);
+.content-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.badge-danger {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-}
-
-/* ============================================================================ */
-/* ENHANCED LAYOUT */
-/* ============================================================================ */
-.row {
+.card-header {
     display: flex;
-    justify-content: space-between;
-    gap: 20px;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ecf0f1;
 }
 
-.col-md-6 {
-    flex: 0 0 calc(50% - 10px);
+.card-header h5 {
+    margin: 0;
+    font-weight: 600;
+    color: #2c3e50;
 }
 
-.readonly-input {
-    background-color: #f3f4f6;
-    cursor: not-allowed;
-    color: #6b7280;
-    border: 1px solid #d1d5db;
+.btn {
+    padding: 12px 25px;
+    border: none;
     border-radius: 8px;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.readonly-input:focus {
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+.btn-primary {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+    color: white;
 }
 
+.btn-secondary {
+    background: #ecf0f1;
+    color: #7f8c8d;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.badge-primary { background: #e3f2fd; color: #1976d2; }
+.badge-success { background: #e8f5e8; color: #2e7d32; }
+.badge-warning { background: #fff3e0; color: #f57c00; }
+.badge-danger { background: #ffebee; color: #d32f2f; }
+
 /* ============================================================================ */
-/* RESPONSIVE ENHANCEMENTS */
+/* MOBILE RESPONSIVE */
 /* ============================================================================ */
+.mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #7f8c8d;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
-    .sidebar {
-        width: 220px;
+    .mobile-toggle {
+        display: block;
     }
     
-    .top-nav img {
-        width: 50px !important;
-        height: 50px !important;
+    .logo-text {
+        display: none;
+    }
+    
+    .user-welcome {
+        display: none;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
     }
     
     .main-content {
-        padding: 15px;
+        margin-left: 0;
+        padding: 20px;
     }
     
-    .navbar-text {
-        display: none;
+    .top-nav {
+        padding: 1rem;
+    }
+    
+    .stats-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .content-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
 }
 
 /* ============================================================================ */
-/* SMOOTH SCROLLBAR */
+/* ANIMATIONS */
 /* ============================================================================ */
-.sidebar::-webkit-scrollbar {
-    width: 6px;
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.sidebar::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1);
+.animate {
+    animation: fadeIn 0.5s ease-out;
 }
 
-.sidebar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
-}
-
-/* ============================================================================ */
-/* LOADING ANIMATIONS */
-/* ============================================================================ */
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.sidebar .nav-link {
-    animation: slideInLeft 0.4s ease forwards;
-}
-
-.sidebar .nav-item:nth-child(1) .nav-link { animation-delay: 0.1s; }
-.sidebar .nav-item:nth-child(2) .nav-link { animation-delay: 0.2s; }
-.sidebar .nav-item:nth-child(3) .nav-link { animation-delay: 0.3s; }
-.sidebar .nav-item:nth-child(4) .nav-link { animation-delay: 0.4s; }
+.animate:nth-child(1) { animation-delay: 0.1s; }
+.animate:nth-child(2) { animation-delay: 0.2s; }
+.animate:nth-child(3) { animation-delay: 0.3s; }
 </style>
-<body>
 
-   <!-- Top Navigation Bar -->
-<nav class="top-nav navbar navbar-expand-lg navbar-dark">
-    <div class="container-fluid">
-        <img src="{{ asset('assets/img/logo/logoklinikpratama.png') }}" alt="Logo" class="img-fluid" style="width: 100px; height: 50px; object-fit: cover; border-radius: 50%; margin-bottom: 20px;">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+<!-- Top Navigation -->
+<nav class="top-nav">
+    <div class="logo-section">
+        <button class="mobile-toggle" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
         </button>
-        <!-- navbar item di kanan -->
-        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
-            <li class="nav-item">
-                <!-- profil di kanan -->
-                <span class="navbar-text text-white ms-3">Selamat datang, {{ Auth::user()->name }}</span>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-person-circle"></i>
+        <img src="{{ asset('assets/img/logo/logoklinikpratama.png') }}" alt="Logo">
+        <span class="logo-text">Klinik Pratama Hadiana Sehat</span>
+    </div>
+    
+    <div class="user-section">
+        <span class="user-welcome">Selamat datang, {{ Auth::user()->name }}</span>
+        <div class="user-avatar" onclick="toggleDropdown(event)">
+            <i class="fas fa-user"></i>
+            <div class="dropdown-menu" id="userDropdown">
+                <a href="/editprofile" class="dropdown-item">
+                    <i class="fas fa-user-edit"></i>
+                    Edit Profile
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/editprofile">Edit Profile</a></li>
-                    <li><hr class="dropdown-divider" /></li>
-                    <li><a class="dropdown-item text-danger" href="{{ route('login') }}" 
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                        </a></li>
-                </ul>
-            </li>
-        </ul>
+                <a href="{{ route('login') }}" class="dropdown-item logout" 
+                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </a>
+            </div>
+        </div>
     </div>
 </nav>
-
 
 <!-- Logout Form -->
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
     @csrf
 </form>
 
+<!-- Sidebar -->
+<aside class="sidebar" id="sidebar">
+    <div class="nav-section">
+        <div class="nav-title">Home</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="/dashboard" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Dashboard
+                </a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="nav-section">
+        <div class="nav-title">Menu</div>
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="/antrian" class="nav-link">
+                    <i class="fas fa-plus-circle"></i>
+                    Buat Antrian
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/riwayatkunjungan" class="nav-link">
+                    <i class="fas fa-history"></i>
+                    Riwayat Kunjungan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/jadwaldokter" class="nav-link">
+                    <i class="fas fa-user-md"></i>
+                    Jadwal Dokter
+                </a>
+            </li>
+        </ul>
+    </div>
+</aside>
 
-    <div class="wrapper">
-        <!-- Sidebar -->
-        <div class="sidebar">
-            <!-- Home Section -->
-            <h7 class="bold-text">HOME</h7>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link " href="/dashboard">
-                        <i class="fas fa-tachometer-alt"></i> Dashboard
-                    </a>
-                </li>
-            </ul>
-            <h7 class="bold-text">MENU</h7>
-            <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="/antrian">
-                        <i class="fas fa-cogs"></i> Buat Kunjungan
-                    </a>
-                <li class="nav-item">
-                    <a class="nav-link" href="/riwayatkunjungan" style="font-size: 15px; color: #fff;">
-                        <i class="fas fa-address-book"></i> Riwayat Kunjungan
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/jadwaldokter">
-                        <i class="fas fa-calendar-alt"></i> Jadwal Dokter
-                    </a>
-                </li>
-            </ul>
-        </div>
+<script>
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+}
+
+function toggleDropdown(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('userDropdown');
+    dropdown.classList.toggle('show');
+}
+
+// Set active menu
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    navLinks.forEach(link => {
+        if (link.getAttribute('href') === currentPath) {
+            navLinks.forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+        }
+    });
+});
+
+// Close dropdown when clicking outside
+document.addEventListener('click', function(e) {
+    const dropdown = document.getElementById('userDropdown');
+    const userAvatar = document.querySelector('.user-avatar');
+    
+    if (!userAvatar.contains(e.target)) {
+        dropdown.classList.remove('show');
+    }
+});
+
+// Close sidebar on mobile when clicking outside
+document.addEventListener('click', function(e) {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.querySelector('.mobile-toggle');
+    
+    if (window.innerWidth <= 768 && 
+        !sidebar.contains(e.target) && 
+        !toggle.contains(e.target) &&
+        sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+    }
+});
+</script>

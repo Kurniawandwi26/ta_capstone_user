@@ -40,9 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Profile Edit
+    // Profile Routes - DIPERBAIKI
     Route::get('/editprofile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::post('/updateprofile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/password', [ProfileController::class, 'updatePassword'])->name('password.update');
 
     // Riwayat Pasien
     Route::get('/riwayatkunjungan', [RiwayatController::class, 'index'])->name('riwayat.index');

@@ -49,31 +49,38 @@ class Antrian extends Model
     }
 
     // ============================================================================
-    // STATIC METHODS
+    // STATIC METHODS - UPDATED FORMAT
     // ============================================================================
 
     public static function generateNoAntrian($poli, $tanggal)
     {
-        $prefix = $poli === 'Umum' ? 'U' : 'K';
-        $date = date('ymd', strtotime($tanggal));
+        // Tentukan prefix berdasarkan poli
+        $prefix = match($poli) {
+            'Umum' => 'UMUM',
+            'Kebidanan' => 'BIDAN',
+            default => strtoupper($poli)
+        };
         
+        // Cari nomor antrian terakhir untuk poli dan tanggal yang sama
         $lastAntrian = self::where('poli', $poli)
                           ->where('tanggal', $tanggal)
-                          ->orderBy('no_antrian', 'desc')
+                          ->orderBy('urutan', 'desc')
                           ->first();
         
+        // Generate nomor urut
         if ($lastAntrian) {
-            $lastNumber = (int) substr($lastAntrian->no_antrian, -3);
-            $newNumber = $lastNumber + 1;
+            $newNumber = $lastAntrian->urutan + 1;
         } else {
             $newNumber = 1;
         }
         
-        return $prefix . $date . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        // Format: UMUM-1, BIDAN-2, dst
+        return $prefix . '-' . $newNumber;
     }
 
     public static function generateUrutan($poli, $tanggal)
     {
+        // Cari urutan terakhir untuk poli dan tanggal yang sama
         $lastUrutan = self::where('poli', $poli)
                          ->where('tanggal', $tanggal)
                          ->max('urutan');
@@ -101,13 +108,85 @@ class Antrian extends Model
         return $this->tanggal->format('d/m/Y');
     }
 
+    /**
+     * Check if antrian can be edited
+     */
     public function canEdit()
     {
+        // Bisa edit jika:
+        // 1. Status masih menunggu
+        // 2. Tanggal antrian >= hari ini
         return $this->status === 'menunggu' && $this->tanggal >= today();
     }
 
+    /**
+     * Check if antrian can be cancelled
+     */
     public function canCancel()
     {
+        // Bisa cancel jika:
+        // 1. Status masih menunggu
+        // 2. Tanggal antrian >= hari ini
         return $this->status === 'menunggu' && $this->tanggal >= today();
+    }
+
+    /**
+     * Get poli name for display
+     */
+    public function getPoliDisplayAttribute()
+    {
+        return match($this->poli) {
+            'Umum' => 'Poli Umum',
+            'Kebidanan' => 'Poli Kebidanan',
+            default => 'Poli ' . $this->poli
+        };
+    }
+
+    /**
+     * Get queue prefix based on poli
+     */
+    public function getQueuePrefixAttribute()
+    {
+        return match($this->poli) {
+            'Umum' => 'UMUM',
+            'Kebidanan' => 'BIDAN',
+            default => strtoupper($this->poli)
+        };
+    }
+
+    // ============================================================================
+    // SCOPES
+    // ============================================================================
+
+    /**
+     * Scope for today's queues
+     */
+    public function scopeToday($query)
+    {
+        return $query->whereDate('tanggal', today());
+    }
+
+    /**
+     * Scope for active queues (menunggu, dipanggil)
+     */
+    public function scopeActive($query)
+    {
+        return $query->whereIn('status', ['menunggu', 'dipanggil']);
+    }
+
+    /**
+     * Scope for specific poli
+     */
+    public function scopeByPoli($query, $poli)
+    {
+        return $query->where('poli', $poli);
+    }
+
+    /**
+     * Scope for specific user
+     */
+    public function scopeByUser($query, $userId)
+    {
+        return $query->where('user_id', $userId);
     }
 }
