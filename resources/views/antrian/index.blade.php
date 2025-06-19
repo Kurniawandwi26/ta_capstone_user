@@ -92,12 +92,14 @@
                     </a>
                 @endif
                 
+                @if($antrianTerbaru->canPrint())
                 <a href="{{ route('antrian.print', $antrianTerbaru->id) }}" 
                    class="btn btn-info btn-sm" 
                    target="_blank"
                    title="Print Tiket">
                     <i class="fas fa-print"></i> Print
                 </a>
+                @endif
                 
                 @if($antrianTerbaru->canCancel())
                     <form action="{{ route('antrian.destroy', $antrianTerbaru->id) }}" 

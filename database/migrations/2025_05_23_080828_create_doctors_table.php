@@ -8,9 +8,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('doctors', function (Blueprint $table) {
-            $table->string('id', 10)->primary(); // D001, D002, dst
+            $table->string('doctor_id', 10)->primary(); // D001, D002, dst
             $table->string('nama');
             $table->string('spesialisasi');
+            $table->string('hari');
             $table->time('mulai_praktek');
             $table->time('selesai_praktek');
             $table->string('foto')->nullable(); // <--- tambahkan ini

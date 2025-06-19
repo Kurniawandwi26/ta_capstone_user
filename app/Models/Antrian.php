@@ -131,6 +131,17 @@ class Antrian extends Model
     }
 
     /**
+     * Check if antrian can be printed
+     */
+    public function canPrint()
+    {
+        // Bisa print jika:
+        // 1. Status BUKAN dibatalkan
+        // 2. Antrian masih ada (tidak dihapus)
+        return $this->status !== 'dibatalkan';
+    }
+
+    /**
      * Get poli name for display
      */
     public function getPoliDisplayAttribute()

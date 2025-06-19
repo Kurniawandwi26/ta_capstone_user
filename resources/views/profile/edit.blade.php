@@ -3,9 +3,7 @@
 @section('title', 'Edit Profile')
 
 @section('content')
-<!-- Main Content -->
 <main class="main-content">
-    <!-- Page Header -->
     <div class="page-header animate">
         <h1><i class="fas fa-user-edit"></i> Edit Profile</h1>
         <p>Kelola informasi akun dan keamanan Anda</p>
@@ -38,13 +36,11 @@
         </div>
     @endif
 
-    <!-- Profile Information Form -->
     <div class="form-card animate">
         <form action="{{ route('profile.update') }}" method="POST" id="profileForm">
             @csrf
             @method('PUT')
             
-            <!-- Personal Information Section -->
             <div class="form-section">
                 <h6 class="form-section-title">
                     <i class="fas fa-user"></i>
@@ -52,7 +48,6 @@
                 </h6>
                 
                 <div class="form-grid">
-                    <!-- Nama Lengkap - READONLY -->
                     <div class="form-group">
                         <label for="name" class="form-label">Nama Lengkap</label>
                         <input type="text" 
@@ -63,7 +58,6 @@
                                readonly>
                     </div>
 
-                    <!-- Email -->
                     <div class="form-group">
                         <label for="email" class="form-label">Email *</label>
                         <input type="email" 
@@ -74,7 +68,6 @@
                                readonly>
                     </div>
 
-                    <!-- Nomor Telepon -->
                     <div class="form-group">
                         <label for="phone" class="form-label">Nomor Telepon *</label>
                         <input type="text" 
@@ -85,7 +78,6 @@
                                readonly>
                     </div>
 
-                    <!-- Nomor KTP -->
                     <div class="form-group">
                         <label for="nomor_ktp" class="form-label">No. KTP *</label>
                         <input type="text" 
@@ -97,7 +89,6 @@
                                readonly>
                     </div>
 
-                    <!-- Tanggal Lahir -->
                     <div class="form-group">
                         <label for="birth_date" class="form-label">Tanggal Lahir *</label>
                         <input type="date" 
@@ -108,15 +99,14 @@
                                readonly>
                     </div>
 
-                    <!-- Alamat -->
                     <div class="form-group full-width">
                         <label for="address" class="form-label">Alamat *</label>
                         <textarea class="form-textarea @error('address') is-invalid @enderror" 
-                                id="address" 
-                                name="address" 
-                                rows="3" 
-                                placeholder="Masukkan alamat lengkap"
-                                readonly>{{ old('address', $user->address) }}</textarea>
+                                 id="address" 
+                                 name="address" 
+                                 rows="3" 
+                                 placeholder="Masukkan alamat lengkap"
+                                 readonly>{{ old('address', $user->address) }}</textarea>
                         @error('address')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
@@ -130,13 +120,11 @@
         </form>
     </div>
 
-    <!-- Change Password Form -->
     <div class="form-card animate">
         <form action="{{ route('password.update') }}" method="POST" id="passwordForm">
             @csrf
             @method('PUT')
             
-            <!-- Password Section -->
             <div class="form-section">
                 <h6 class="form-section-title">
                     <i class="fas fa-lock"></i>
@@ -144,64 +132,67 @@
                 </h6>
                 
                 <div class="form-grid password-grid">
-                    <!-- Current Password -->
                     <div class="form-group">
                         <label for="current_password" class="form-label">Password Saat Ini *</label>
-                        <div class="password-input-group">
+                        {{-- Menggunakan wrapper baru untuk ikon mata --}}
+                        <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input @error('current_password') is-invalid @enderror" 
                                    id="current_password" 
                                    name="current_password" 
                                    required>
-                            <button type="button" class="password-toggle" onclick="togglePassword('current_password')">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                            <i class="fas fa-eye password-toggle" id="toggleCurrentPassword"></i>
                         </div>
                         @error('current_password')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    <!-- New Password -->
                     <div class="form-group">
                         <label for="password" class="form-label">Password Baru *</label>
-                        <div class="password-input-group">
+                        {{-- Menggunakan wrapper baru untuk ikon mata dan feedback kekuatan --}}
+                        <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input @error('password') is-invalid @enderror" 
                                    id="password" 
                                    name="password" 
-                                   minlength="8"
                                    required>
-                            <button type="button" class="password-toggle" onclick="togglePassword('password')">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                            <i class="fas fa-eye password-toggle" id="toggleNewPassword"></i>
                         </div>
-                        <small class="form-help">Minimal 8 karakter</small>
                         @error('password')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
+                        <div id="passwordStrengthFeedback" class="password-strength-feedback d-none">
+                            <div class="password-strength-meter">
+                                <div id="strengthBar" class="password-strength-bar"></div>
+                            </div>
+                            <div id="strengthText" class="password-strength-text"></div>
+                            <div class="password-requirements mt-2">
+                                <ul>
+                                    <li id="reqLength"><i class="fas fa-times-circle"></i> Minimal 8 karakter</li>
+                                    <li id="reqUppercase"><i class="fas fa-times-circle"></i> Huruf kapital (A-Z)</li>
+                                    <li id="reqNumber"><i class="fas fa-times-circle"></i> Angka (0-9)</li>
+                                    <li id="reqSpecial"><i class="fas fa-times-circle"></i> Karakter spesial (!@#$...)</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Confirm Password -->
                     <div class="form-group">
                         <label for="password_confirmation" class="form-label">Konfirmasi Password Baru *</label>
-                        <div class="password-input-group">
+                        {{-- Menggunakan wrapper baru untuk ikon mata --}}
+                        <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input" 
                                    id="password_confirmation" 
                                    name="password_confirmation" 
-                                   minlength="8"
                                    required>
-                            <button type="button" class="password-toggle" onclick="togglePassword('password_confirmation')">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                            <i class="fas fa-eye password-toggle" id="toggleConfirmNewPassword"></i>
                         </div>
-                        <small class="form-help">Ulangi password baru</small>
                     </div>
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <div class="form-actions">
                 <button type="submit" class="btn btn-danger btn-lg" id="passwordBtn">
                     <i class="fas fa-key"></i>
@@ -212,7 +203,6 @@
     </div>
 </main>
 
-<!-- Styles -->
 <style>
 .page-header {
     background: white;
@@ -234,7 +224,8 @@
     margin: 0;
 }
 
-.readonly-input {
+.readonly-input,
+.form-textarea { /* Digabungkan untuk gaya readonly */
     background-color: #f8f9fa !important;
     color: #6c757d !important;
     border-color: #dee2e6 !important;
@@ -243,14 +234,6 @@
     pointer-events: none;
 }
 
-.form-textarea {
-    background-color: #f8f9fa !important;
-    color: #6c757d !important;
-    border-color: #dee2e6 !important;
-    cursor: not-allowed !important;
-    opacity: 0.8;
-    pointer-events: none;
-}
 
 .alert {
     background: white;
@@ -373,31 +356,39 @@
     min-height: 80px;
 }
 
-.password-input-group {
+/* --- Start Password Input Group Styles (untuk ikon mata di dalam input) --- */
+.password-input-wrapper { /* Nama baru, menggantikan .password-input-group */
     position: relative;
+    width: 100%;
 }
 
-.password-input-group .form-input {
-    padding-right: 45px;
+.password-input-wrapper .form-input {
+    padding-right: 2.5rem; /* Beri ruang untuk ikon mata */
 }
 
-.password-toggle {
+.password-toggle { /* Mengganti button.password-toggle */
     position: absolute;
-    right: 12px;
+    right: 0.75rem; /* Posisi ikon dari kanan input */
     top: 50%;
     transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #7f8c8d;
     cursor: pointer;
-    padding: 5px;
-    border-radius: 4px;
-    transition: color 0.3s ease;
+    color: #7f8c8d;
+    font-size: 1.1rem;
+    padding: 0.25rem;
+    z-index: 2; /* Pastikan ikon di atas input */
+    background: transparent; /* Pastikan tidak ada background bawaan button */
+    border: none; /* Pastikan tidak ada border bawaan button */
 }
 
 .password-toggle:hover {
     color: #3498db;
 }
+
+.password-toggle.hidden {
+    display: none; /* Untuk menyembunyikan ikon saat input kosong */
+}
+/* --- End Password Input Group Styles --- */
+
 
 .form-help {
     color: #7f8c8d;
@@ -436,6 +427,73 @@
     box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
 }
 
+/* --- Start Password Strength Indicator Styles (copied from register.blade.php) --- */
+.password-strength-feedback {
+    margin-top: 0.5rem;
+    /* margin-bottom: 0.8rem; ini dihapus karena .password-input-wrapper sudah ada margin */
+    padding: 0.5rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: #495057;
+    background-color: #f8f9fa;
+}
+
+.password-strength-meter {
+    height: 8px;
+    border-radius: 4px;
+    background-color: #e9ecef;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.password-strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.password-strength-text {
+    font-weight: 600;
+    text-align: right;
+    margin-top: 0.3rem;
+}
+
+.password-strength-bar.weak { background-color: #dc3545; }
+.password-strength-text.weak { color: #dc3545; }
+
+.password-strength-bar.medium { background-color: #ffc107; }
+.password-strength-text.medium { color: #ffc107; }
+
+.password-strength-bar.strong { background-color: #28a745; }
+.password-strength-text.strong { color: #28a745; }
+
+.password-requirements ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.password-requirements li {
+    margin-bottom: 0.2rem;
+    display: flex;
+    align-items: center;
+}
+
+.password-requirements li i {
+    margin-right: 0.5rem;
+    width: 1em;
+    text-align: center;
+}
+
+.password-requirements li.valid i {
+    color: #28a745;
+}
+
+.password-requirements li.invalid i {
+    color: #dc3545;
+}
+/* --- End Password Strength Indicator Styles --- */
+
 @media (max-width: 768px) {
     .form-grid,
     .password-grid {
@@ -468,41 +526,206 @@
 }
 </style>
 
-<!-- JavaScript -->
 <script>
-function togglePassword(inputId) {
-    const input = document.getElementById(inputId);
-    const toggle = input.parentElement.querySelector('.password-toggle i');
+// Fungsi yang diadaptasi dari register.blade.php
+function setupPasswordToggle(inputElement, toggleIconElement) {
+    // Initial state: hide icon if input is empty
+    if (inputElement.value === '') {
+        toggleIconElement.classList.add('hidden');
+    }
+
+    // Toggle visibility on click
+    toggleIconElement.addEventListener('click', function () {
+        const type = inputElement.getAttribute('type') === 'password' ? 'text' : 'password';
+        inputElement.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // Show/hide icon based on input content
+    inputElement.addEventListener('input', function() {
+        if (this.value === '') {
+            toggleIconElement.classList.add('hidden');
+            // Reset icon to eye if it was changed to eye-slash and input becomes empty
+            toggleIconElement.classList.remove('fa-eye-slash');
+            toggleIconElement.classList.add('fa-eye');
+            inputElement.setAttribute('type', 'password'); // Ensure it's hidden when empty
+        } else {
+            toggleIconElement.classList.remove('hidden');
+        }
+    });
     
-    if (input.type === 'password') {
-        input.type = 'text';
-        toggle.classList.remove('fa-eye');
-        toggle.classList.add('fa-eye-slash');
-    } else {
-        input.type = 'password';
-        toggle.classList.remove('fa-eye-slash');
-        toggle.classList.add('fa-eye');
+    // Trigger initial check if field already has value
+    if (inputElement.value !== '') {
+        toggleIconElement.classList.remove('hidden');
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', function() {
     const profileForm = document.getElementById('profileForm');
     const passwordForm = document.getElementById('passwordForm');
-    const profileBtn = document.getElementById('profileBtn');
+    const profileBtn = document.getElementById('profileBtn'); // Pastikan ID ini ada di form profile
     const passwordBtn = document.getElementById('passwordBtn');
 
-    // Prevent double submission for profile form
-    if (profileForm) {
-        profileForm.addEventListener('submit', function() {
-            profileBtn.disabled = true;
-            profileBtn.classList.add('btn-loading');
-            profileBtn.innerHTML = '<i class="fas fa-spinner"></i> Menyimpan...';
+    // Get password elements for strength validation
+    const newPasswordInput = document.getElementById('password'); // Ini adalah "Password Baru"
+    const confirmNewPasswordInput = document.getElementById('password_confirmation'); // Ini adalah "Konfirmasi Password Baru"
+    const passwordStrengthFeedback = document.getElementById('passwordStrengthFeedback');
+    const strengthBar = document.getElementById('strengthBar');
+    const strengthText = document.getElementById('strengthText');
+    const reqLength = document.getElementById('reqLength');
+    const reqUppercase = document.getElementById('reqUppercase');
+    const reqNumber = document.getElementById('reqNumber');
+    const reqSpecial = document.getElementById('reqSpecial');
+
+    // Get toggle icons for all password fields
+    const toggleCurrentPassword = document.getElementById('toggleCurrentPassword');
+    const toggleNewPassword = document.getElementById('toggleNewPassword');
+    const toggleConfirmNewPassword = document.getElementById('toggleConfirmNewPassword');
+
+    let isNewPasswordStrong = false; // Flag untuk status kekuatan password baru
+    const requiredCriteriaForStrong = 4; // Minimal 4 kriteria wajib untuk "Sangat Kuat"
+
+    // Apply toggle visibility to all password fields
+    setupPasswordToggle(document.getElementById('current_password'), toggleCurrentPassword);
+    setupPasswordToggle(newPasswordInput, toggleNewPassword);
+    setupPasswordToggle(confirmNewPasswordInput, toggleConfirmNewPassword);
+
+
+    // Logic for New Password Strength Validation
+    if (newPasswordInput) {
+        newPasswordInput.addEventListener('input', function() {
+            const password = this.value;
+            let score = 0;
+
+            // Show feedback div if password is not empty
+            if (password.length > 0) {
+                passwordStrengthFeedback.classList.remove('d-none');
+            } else {
+                passwordStrengthFeedback.classList.add('d-none');
+                isNewPasswordStrong = false; // Reset flag
+                // Tombol submit akan diupdate oleh fungsi updatePasswordFormButtonState()
+                return;
+            }
+
+            // Check criteria
+            const hasLength = password.length >= 8;
+            const hasUppercase = /[A-Z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const hasSpecial = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(password);
+
+            // Update checklist UI
+            updateRequirement(reqLength, hasLength);
+            updateRequirement(reqUppercase, hasUppercase);
+            updateRequirement(reqNumber, hasNumber);
+            updateRequirement(reqSpecial, hasSpecial);
+
+            // Calculate score for actual strength determination
+            if (hasLength) score++;
+            if (hasUppercase) score++;
+            if (hasNumber) score++;
+            if (hasSpecial) score++;
+
+            let fulfilledRequiredCriteria = score;
+
+            let strength = '';
+            let barColorClass = '';
+            let textColorClass = '';
+
+            // Determine strength based on required criteria
+            if (fulfilledRequiredCriteria === requiredCriteriaForStrong) {
+                strength = 'Sangat Kuat';
+                barColorClass = 'strong';
+                textColorClass = 'strong';
+                isNewPasswordStrong = true;
+            } else if (fulfilledRequiredCriteria >= (requiredCriteriaForStrong - 1)) { // e.g., 3 out of 4 criteria
+                strength = 'Cukup Kuat';
+                barColorClass = 'medium';
+                textColorClass = 'medium';
+                isNewPasswordStrong = false;
+            } else {
+                strength = 'Lemah';
+                barColorClass = 'weak';
+                textColorClass = 'weak';
+                isNewPasswordStrong = false;
+            }
+
+            // Update strength bar and text
+            strengthBar.style.width = (score / requiredCriteriaForStrong) * 100 + '%';
+            strengthBar.className = 'password-strength-bar ' + barColorClass;
+            strengthText.textContent = 'Kekuatan: ' + strength;
+            strengthText.className = 'password-strength-text ' + textColorClass;
+
+            updatePasswordFormButtonState(); // Update submit button state
         });
     }
 
-    // Prevent double submission for password form
+    function updateRequirement(element, isValid) {
+        element.classList.remove('valid', 'invalid');
+        element.querySelector('i').className = isValid ? 'fas fa-check-circle' : 'fas fa-times-circle';
+        element.classList.add(isValid ? 'valid' : 'invalid');
+    }
+
+    // Fungsi untuk mengaktifkan/menonaktifkan tombol Ubah Password
+    function updatePasswordFormButtonState() {
+        const currentPassword = document.getElementById('current_password').value;
+        const newPassword = newPasswordInput.value;
+        const confirmNewPassword = confirmNewPasswordInput.value;
+
+        // Tombol aktif jika:
+        // 1. Password saat ini tidak kosong
+        // 2. Password baru cukup kuat (isNewPasswordStrong)
+        // 3. Password baru dan konfirmasi password baru cocok
+        if (currentPassword.length > 0 && isNewPasswordStrong && (newPassword === confirmNewPassword)) {
+            passwordBtn.disabled = false;
+        } else {
+            passwordBtn.disabled = true;
+        }
+    }
+
+    // Trigger initial check for new password strength if field is pre-filled (unlikely for new pass)
+    if (newPasswordInput && newPasswordInput.value.length > 0) {
+        newPasswordInput.dispatchEvent(new Event('input'));
+    } else {
+        updatePasswordFormButtonState(); // Initial state disabled if new pass empty
+    }
+
+    // Listen for changes on current password and confirm new password as well
+    document.getElementById('current_password').addEventListener('input', updatePasswordFormButtonState);
+    confirmNewPasswordInput.addEventListener('input', updatePasswordFormButtonState);
+
+
+    // Password form submission validation
     if (passwordForm) {
-        passwordForm.addEventListener('submit', function() {
+        passwordForm.addEventListener('submit', function(event) {
+            // Re-run validation for new password just before submission
+            if (newPasswordInput) {
+                newPasswordInput.dispatchEvent(new Event('input'));
+            }
+            
+            // Check if current password is empty
+            if (document.getElementById('current_password').value.length === 0) {
+                event.preventDefault();
+                alert('Password Saat Ini tidak boleh kosong.');
+                return;
+            }
+
+            // Check if new password and confirm new password match
+            if (newPasswordInput.value !== confirmNewPasswordInput.value) {
+                event.preventDefault();
+                alert('Password Baru dan Konfirmasi Password Baru tidak cocok.');
+                return;
+            }
+
+            // Check if new password is strong enough
+            if (!isNewPasswordStrong) {
+                event.preventDefault();
+                alert('Password Baru Anda belum cukup kuat. Harap penuhi semua kriteria yang wajib.');
+                return;
+            }
+
+            // If all validations pass, disable button and show loading state
             passwordBtn.disabled = true;
             passwordBtn.classList.add('btn-loading');
             passwordBtn.innerHTML = '<i class="fas fa-spinner"></i> Mengubah...';
@@ -515,36 +738,6 @@ document.addEventListener('DOMContentLoaded', function() {
             this.parentElement.style.display = 'none';
         });
     });
-
-    // KTP number validation
-    const ktpInput = document.getElementById('nomor_ktp');
-    if (ktpInput) {
-        ktpInput.addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '');
-        });
-    }
-
-    // Phone number validation
-    const phoneInput = document.getElementById('phone');
-    if (phoneInput) {
-        phoneInput.addEventListener('input', function() {
-            this.value = this.value.replace(/\D/g, '');
-        });
-    }
-
-    // Password confirmation validation
-    const passwordInput = document.getElementById('password');
-    const confirmPasswordInput = document.getElementById('password_confirmation');
-    
-    if (confirmPasswordInput) {
-        confirmPasswordInput.addEventListener('input', function() {
-            if (passwordInput.value !== this.value) {
-                this.setCustomValidity('Password tidak cocok');
-            } else {
-                this.setCustomValidity('');
-            }
-        });
-    }
 });
 </script>
 @endsection

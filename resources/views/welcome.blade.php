@@ -4,20 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Medilab Bootstrap Template</title>
+  <title>Klinik Pratama</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
-  <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-  <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
-  <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -25,17 +22,9 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Medilab
-  * Template URL: https://bootstrapmade.com/medilab-free-medical-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
-</head>
+  </head>
 
 <body class="index-page">
 
@@ -44,20 +33,13 @@
 
       <div class="container position-relative d-flex align-items-center justify-content-between">
         <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <!-- Uncomment the line below if you also wish to use an image logo -->
-          <!-- <img src="assets/img/logo.png" alt=""> -->
           <h1 class="sitename">Klinik Pratama Hadina sehat</h1>
         </a>
 
         <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="/login">Login</a></li>
-            <li><a class="cta-btn btn btn-primary" href="/register">Ambil Antrean</a></li>
-          </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          
+          <i class="mobile-nav-toggle"></i>
         </nav>
-
-        
 
       </div>
 
@@ -67,7 +49,6 @@
 
   <main class="main">
 
-    <!-- Hero Section -->
     <section id="hero" class="hero section light-background">
 
       <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
@@ -77,30 +58,27 @@
         <div class="welcome position-relative" data-aos="fade-down" data-aos-delay="100">
           <h2>Selamat Datang</h2>
           <p>Di klinik pratama hadiana sehat</p>
-        </div><!-- End Welcome -->
-
-        <div class="content row gy-4">
+        </div><div class="content row gy-4">
           <div class="col-lg-4 d-flex align-items-stretch">
             <div class="why-box" data-aos="zoom-out" data-aos-delay="200">
               <h3>Sistem Antrean Online</h3>
               <p>
                   🩺 <strong>Klinik & Apotek Hadiana Sehat</strong> 💊 <br>
                   Kami siap melayani kesehatan Anda dengan sepenuh hati! ✨ <br><br>
-          
+              
                   ⏰ <strong>Jam Operasional:</strong> <br>
                   📅 Senin - Sabtu <br>
                   🕗 08.00 - 20.00 <br><br>
-          
+              
                   📍 <strong>Alamat:</strong> <br>
                   Jl. Raya Banjaran No. 658A, Pameungpeuk - Kab. Bandung
               </p>
               <div class="text-center">
-                <a href="#about" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
+                <a href="/login" class="more-btn"><span>Login</span></a>
+                <a href="/register" class="more-btn"><span>Ambil Antrean</span></a>
               </div>
             </div>
-          </div><!-- End Why Box -->
-
-          <div class="col-lg-8 d-flex align-items-stretch">
+          </div><div class="col-lg-8 d-flex align-items-stretch">
             <div class="d-flex flex-column justify-content-center">
               <div class="row gy-4">
 
@@ -110,35 +88,26 @@
                     <h4>Poli Umum</h4>
                     <p>Poli Umum menyediakan layanan pemeriksaan kesehatan, pengobatan, dan edukasi untuk membantu pasien menjaga kesehatannya. Layanan ini meliputi konsultasi dokter, pengobatan umum, serta pemeriksaan dasar seperti cek tekanan darah dan perawatan luka ringan.</p>
                   </div>
-                </div><!-- End Icon Box -->
-
-                <div class="col-xl-4 d-flex align-items-stretch">
+                </div><div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box" data-aos="zoom-out" data-aos-delay="400">
                     <i class="bi bi-gem"></i>
                     <h4>Poli Kebidanan</h4>
                     <p>Poli Kebidanan menyediakan layanan kesehatan khusus bagi wanita, terutama yang berkaitan dengan kehamilan dan kesehatan reproduksi. Layanan ini meliputi konsultasi kebidanan, suntik KB, pemeriksaan lab dasar, serta pemantauan kondisi ibu hamil untuk memastikan kesehatan ibu dan janin tetap terjaga.</p>
                   </div>
-                </div><!-- End Icon Box -->
-
-                {{-- <div class="col-xl-4 d-flex align-items-stretch">
+                </div>{{-- <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box" data-aos="zoom-out" data-aos-delay="500">
                     <i class="bi bi-inboxes"></i>
                     <h4>Labore consequatur incidid dolore</h4>
                     <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
                   </div>
-                </div><!-- End Icon Box --> --}}
+                </div>--}}
 
               </div>
             </div>
           </div>
-        </div><!-- End  Content-->
+        </div></div>
 
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    {{-- <section id="about" class="about section">
+    </section>{{-- <section id="about" class="about section">
 
       <div class="container">
 
@@ -183,15 +152,12 @@
 
       </div>
 
-    </section><!-- /About Section --> --}}
+    </section>--}}
 
-  <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <!-- Preloader -->
   <div id="preloader"></div>
 
-  <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
@@ -199,7 +165,6 @@
   <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
-  <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
 </body>

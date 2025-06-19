@@ -33,6 +33,7 @@ class AntrianController extends Controller
         // Cek apakah user sudah punya antrian aktif
         $existingAntrian = Antrian::where('user_id', Auth::id())
                                  ->whereIn('status', ['menunggu', 'dipanggil'])
+                                 ->whereDate('tanggal', '>=', today())
                                  ->first();
 
         if ($existingAntrian) {
@@ -137,6 +138,13 @@ class AntrianController extends Controller
         // Pastikan user hanya bisa download antrian mereka sendiri
         if (Auth::id() !== $antrian->user_id) {
             abort(403, 'Unauthorized action.');
+        }
+
+        // VALIDASI: Antrian yang dibatalkan tidak bisa di-download
+        if ($antrian->status === 'dibatalkan') {
+            return redirect()->route('antrian.index')->withErrors([
+                'error' => 'Tidak dapat mengunduh tiket antrian yang sudah dibatalkan.'
+            ]);
         }
 
         try {

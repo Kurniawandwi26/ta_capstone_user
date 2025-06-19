@@ -3,9 +3,7 @@
 @section('title', 'Buat Antrian')
 
 @section('content')
-<!-- Main Content -->
 <main class="main-content">
-    <!-- Page Header -->
     <div class="page-header animate">
         <h1><i class="fas fa-plus-circle"></i> Buat Antrian</h1>
         <p>Isi form berikut untuk membuat antrian baru</p>
@@ -38,12 +36,10 @@
         </div>
     @endif
 
-    <!-- Form Card -->
     <div class="form-card animate">
         <form action="{{ route('antrian.store') }}" method="POST" id="antrianForm">
             @csrf
             
-            <!-- Personal Information Section -->
             <div class="form-section">
                 <h6 class="form-section-title">
                     <i class="fas fa-user"></i>
@@ -51,7 +47,6 @@
                 </h6>
                 
                 <div class="form-grid">
-                    <!-- Nama Lengkap - READONLY -->
                     <div class="form-group">
                         <label for="name" class="form-label">Nama Lengkap</label>
                         <input type="text" 
@@ -63,7 +58,6 @@
                                tabindex="-1">
                     </div>
 
-                    <!-- Nomor HP - READONLY -->
                     <div class="form-group">
                         <label for="phone" class="form-label">Nomor HP</label>
                         <input type="text" 
@@ -75,7 +69,6 @@
                                tabindex="-1">
                     </div>
 
-                    <!-- Jenis Kelamin - READONLY -->
                     <div class="form-group">
                         <label for="gender" class="form-label">Jenis Kelamin</label>
                         <input type="text" 
@@ -89,7 +82,6 @@
                 </div>
             </div>
 
-            <!-- Medical Information Section -->
             <div class="form-section">
                 <h6 class="form-section-title">
                     <i class="fas fa-stethoscope"></i>
@@ -97,7 +89,6 @@
                 </h6>
                 
                 <div class="form-grid">
-                    <!-- Poli - CUSTOM DROPDOWN -->
                     <div class="form-group">
                         <label for="poli" class="form-label">Poli</label>
                         <div class="custom-dropdown" data-name="poli">
@@ -125,7 +116,6 @@
                         @enderror
                     </div>
 
-                    <!-- Dokter - CUSTOM DROPDOWN -->
                     <div class="form-group">
                         <label for="doctor_id" class="form-label">Dokter</label>
                         <div class="custom-dropdown" data-name="doctor_id">
@@ -156,16 +146,11 @@
                         @enderror
                     </div>
 
-                    <!-- Tanggal Antrian - EDITABLE -->
                     <div class="form-group">
-                        <label for="tanggal" class="form-label">Tanggal Antrian</label>
-                        <input type="date" 
-                               class="form-input @error('tanggal') is-invalid @enderror" 
-                               id="tanggal" 
-                               name="tanggal" 
-                               value="{{ old('tanggal') }}" 
-                               min="{{ date('Y-m-d') }}"
-                               required>
+                        <label for="tanggal_antrian_display" class="form-label">Tanggal Antrian</label>
+                        <div id="tanggal-antrian-picker" class="tanggal-antrian-picker">
+                            </div>
+                        <input type="hidden" name="tanggal" id="tanggal" value="{{ old('tanggal') }}" required>
                         @error('tanggal')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
@@ -173,7 +158,6 @@
                 </div>
             </div>
 
-            <!-- Submit Button -->
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
                     <i class="fas fa-plus-circle"></i>
@@ -188,8 +172,66 @@
     </div>
 </main>
 
-<!-- Form Styles -->
 <style>
+/* Existing styles... */
+/* Add custom styles for the new date picker */
+.tanggal-antrian-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 10px;
+    border: 2px solid #ecf0f1;
+    border-radius: 8px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.date-option {
+    padding: 10px 15px;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    cursor: pointer;
+    background-color: #f8f9fa;
+    color: #34495e;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.2s ease;
+    flex: 1 1 auto; /* Allow items to grow and shrink */
+    min-width: 80px; /* Minimum width for each date option */
+}
+
+.date-option:hover {
+    background-color: #e9ecef;
+    border-color: #ced4da;
+}
+
+.date-option.selected {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+    font-weight: 600;
+    box-shadow: 0 2px 5px rgba(52, 152, 219, 0.2);
+}
+
+.date-option.disabled {
+    background-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Ensure the date picker fills the grid column */
+.form-group:has(.tanggal-antrian-picker) {
+    grid-column: span 2; /* Span full width on larger screens */
+}
+
+@media (max-width: 768px) {
+    .form-group:has(.tanggal-antrian-picker) {
+        grid-column: span 1; /* Back to single column on mobile */
+    }
+}
+
+/* Existing styles below */
 .page-header {
     background: white;
     padding: 25px;
@@ -343,13 +385,13 @@
     font-size: 16px;
 }
 
-/* Custom Dropdown Styles */
+/* Custom Dropdown Styles (untuk Pilih Poli/Dokter) */
 .custom-dropdown {
     position: relative;
     width: 100%;
 }
 
-.dropdown-trigger {
+.custom-dropdown .dropdown-trigger { /* Lebih spesifik */
     width: 100%;
     padding: 12px 45px 12px 15px;
     border: 2px solid #ecf0f1;
@@ -364,20 +406,20 @@
     min-height: 48px;
 }
 
-.dropdown-trigger:hover {
+.custom-dropdown .dropdown-trigger:hover { /* Lebih spesifik */
     border-color: #bdc3c7;
 }
 
-.dropdown-trigger.active {
+.custom-dropdown .dropdown-trigger.active { /* Lebih spesifik */
     border-color: #3498db;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
-.dropdown-trigger.is-invalid {
+.custom-dropdown .dropdown-trigger.is-invalid { /* Lebih spesifik */
     border-color: #e74c3c;
 }
 
-.dropdown-text {
+.custom-dropdown .dropdown-text { /* Lebih spesifik */
     flex: 1;
     color: #2c3e50;
     font-size: 14px;
@@ -386,53 +428,49 @@
     white-space: nowrap;
 }
 
-.dropdown-text.placeholder {
+.custom-dropdown .dropdown-text.placeholder { /* Lebih spesifik */
     color: #95a5a6;
 }
 
-.dropdown-icon {
+.custom-dropdown .dropdown-icon { /* Lebih spesifik */
     color: #95a5a6;
     transition: transform 0.3s ease;
     font-size: 12px;
 }
 
-.dropdown-trigger.active .dropdown-icon {
+.custom-dropdown .dropdown-trigger.active .dropdown-icon { /* Lebih spesifik */
     transform: rotate(180deg);
 }
 
+/* GLOBAL dropdown-menu, yang mana juga dipakai oleh profil dropdown.
+   Pastikan ini tidak memiliki posisi fixed. */
 .dropdown-menu {
     position: absolute;
-    top: 100%;
-    left: 0;
+    top: 50px;
     right: 0;
     background: white;
-    border: 2px solid #ecf0f1;
-    border-top: none;
-    border-radius: 0 0 8px 8px;
+    border: 1px solid #ecf0f1;
+    border-radius: 8px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
-    max-height: 300px;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
+    min-width: 180px;
+    padding: 10px 0;
+    display: none;
+    z-index: 2001; /* Higher than navbar */
 }
 
 .dropdown-menu.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+    display: block;
 }
 
-.dropdown-search {
+/* Lebih spesifik untuk dropdown pencarian */
+.custom-dropdown .dropdown-search {
     position: relative;
     padding: 10px;
     border-bottom: 1px solid #ecf0f1;
     background: #f8f9fa;
 }
 
-.search-input {
+.custom-dropdown .search-input {
     width: 100%;
     padding: 8px 35px 8px 12px;
     border: 1px solid #dee2e6;
@@ -441,11 +479,11 @@
     outline: none;
 }
 
-.search-input:focus {
+.custom-dropdown .search-input:focus {
     border-color: #3498db;
 }
 
-.search-icon {
+.custom-dropdown .search-icon {
     position: absolute;
     right: 20px;
     top: 50%;
@@ -454,13 +492,13 @@
     font-size: 12px;
 }
 
-.dropdown-options {
+.custom-dropdown .dropdown-options {
     max-height: 200px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
 
-.dropdown-option {
+.custom-dropdown .dropdown-option {
     padding: 12px 15px;
     cursor: pointer;
     border-bottom: 1px solid #f8f9fa;
@@ -469,36 +507,36 @@
     align-items: center;
 }
 
-.dropdown-option:hover {
+.custom-dropdown .dropdown-option:hover {
     background-color: #f8f9fa;
 }
 
-.dropdown-option.selected {
+.custom-dropdown .dropdown-option.selected {
     background-color: #3498db;
     color: white;
 }
 
-.dropdown-option.hidden {
+.custom-dropdown .dropdown-option.hidden {
     display: none;
 }
 
-.doctor-info {
+.custom-dropdown .doctor-info {
     display: flex;
     flex-direction: column;
     gap: 2px;
 }
 
-.doctor-name {
+.custom-dropdown .doctor-name {
     font-weight: 500;
     font-size: 14px;
 }
 
-.doctor-time {
+.custom-dropdown .doctor-time {
     font-size: 12px;
     color: #7f8c8d;
 }
 
-.dropdown-option.selected .doctor-time {
+.custom-dropdown .dropdown-option.selected .doctor-time {
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -517,46 +555,69 @@
         padding: 20px;
     }
 
-    .dropdown-menu {
-        max-height: 250px;
+    /* Ini adalah perbaikan utamanya! Target hanya dropdown di dalam custom-dropdown */
+    .custom-dropdown .dropdown-menu { /* Target semua dropdown di dalam .custom-dropdown */
+        max-height: 250px; /* Batasi tinggi menu dropdown */
+        /* Hapus properti positioning global (top, left, transform, fixed)
+           agar dropdown ini tidak lagi muncul di tengah layar */
+        position: absolute; /* Pastikan kembali ke absolute */
+        top: 100%; /* Atau sesuaikan agar muncul di bawah trigger */
+        left: 0;
+        right: auto;
+        transform: none;
+        width: 100%; /* Sesuaikan lebar dengan parent custom-dropdown */
+        max-width: none; /* Biarkan dia mengisi 100% dari parent */
     }
 
-    .dropdown-options {
+    /* Jika ada .dropdown-menu.show di mobile, pastikan posisinya juga kembali normal */
+    .custom-dropdown .dropdown-menu.show {
+        position: absolute; /* Kunci perbaikan! Kembali ke absolute */
+        top: 100%; /* Agar muncul di bawah trigger custom-dropdown */
+        left: 0;
+        right: auto;
+        transform: none; /* Hapus transform yang membuat di tengah */
+        width: 100%; /* Agar mengisi lebar custom-dropdown */
+        max-width: none;
+        border-radius: 8px; /* Kembalikan border-radius normal */
+        border: 1px solid #ecf0f1; /* Kembalikan border normal */
+    }
+
+    .custom-dropdown .dropdown-options {
         max-height: 160px;
     }
 
-    .dropdown-trigger {
+    .custom-dropdown .dropdown-trigger {
         min-height: 52px;
         padding: 15px 45px 15px 15px;
     }
 
-    .dropdown-option {
+    .custom-dropdown .dropdown-option {
         padding: 15px;
         min-height: 60px;
     }
 
-    .doctor-name {
+    .custom-dropdown .doctor-name {
         font-size: 15px;
     }
 
-    .doctor-time {
+    .custom-dropdown .doctor-time {
         font-size: 13px;
     }
 }
 
 /* Touch-friendly adjustments */
 @media (max-width: 480px) {
-    .dropdown-trigger {
+    .custom-dropdown .dropdown-trigger {
         min-height: 56px;
         padding: 18px 50px 18px 18px;
     }
 
-    .dropdown-option {
+    .custom-dropdown .dropdown-option {
         padding: 18px;
         min-height: 70px;
     }
 
-    .search-input {
+    .custom-dropdown .search-input {
         padding: 12px 40px 12px 15px;
         font-size: 16px; /* Prevents zoom on iOS */
     }
@@ -577,7 +638,7 @@
     to { transform: rotate(360deg); }
 }
 
-/* Backdrop for mobile */
+/* Backdrop for mobile (untuk custom dropdowns) */
 .dropdown-backdrop {
     position: fixed;
     top: 0;
@@ -596,7 +657,8 @@
     visibility: visible;
 }
 
-@media (max-width: 768px) {
+/* Hapus aturan ini yang menyebabkan dropdown profil di tengah */
+/* @media (max-width: 768px) {
     .dropdown-menu.show {
         position: fixed;
         top: 50%;
@@ -608,10 +670,9 @@
         border-radius: 12px;
         border: 2px solid #ecf0f1;
     }
-}
+} */
 </style>
 
-<!-- JavaScript -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('antrianForm');
@@ -642,13 +703,6 @@ document.addEventListener('DOMContentLoaded', function() {
             submitBtn.classList.add('btn-loading');
             submitBtn.innerHTML = '<i class="fas fa-spinner"></i> Memproses...';
         });
-    }
-
-    // Set minimum date untuk tanggal antrian
-    const tanggalInput = document.getElementById('tanggal');
-    if (tanggalInput) {
-        const today = new Date().toISOString().split('T')[0];
-        tanggalInput.setAttribute('min', today);
     }
 
     // Close alert functionality
@@ -819,6 +873,74 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove invalid state
             const trigger = dropdown.querySelector('.dropdown-trigger');
             trigger.classList.remove('is-invalid');
+        }
+    }
+
+
+    // --- Custom Date Picker Logic ---
+    const tanggalAntrianPicker = document.getElementById('tanggal-antrian-picker');
+    const hiddenTanggalInput = document.getElementById('tanggal'); // The actual input for form submission
+    const today = new Date();
+
+    function formatDateForInput(date) {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`; // YYYY-MM-DD format
+    }
+
+    function formatDisplayDate(date) {
+        const options = { weekday: 'short', month: 'short', day: 'numeric' };
+        return date.toLocaleDateString('id-ID', options); // e.g., "Kam, 20 Jun"
+    }
+
+    function renderDateOptions() {
+        tanggalAntrianPicker.innerHTML = ''; // Clear previous options
+        for (let i = 0; i < 7; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() + i);
+
+            const dateString = formatDateForInput(date);
+            const displayString = formatDisplayDate(date);
+
+            const dateOption = document.createElement('div');
+            dateOption.classList.add('date-option');
+            dateOption.setAttribute('data-date', dateString);
+            dateOption.textContent = displayString;
+
+            // Set selected if it matches the old('tanggal') value or is today initially
+            if (hiddenTanggalInput.value === dateString) {
+                dateOption.classList.add('selected');
+            } else if (!hiddenTanggalInput.value && i === 0) { // Select today by default if no old value
+                dateOption.classList.add('selected');
+                hiddenTanggalInput.value = dateString;
+            }
+
+            dateOption.addEventListener('click', function() {
+                // Remove selected class from all options
+                tanggalAntrianPicker.querySelectorAll('.date-option').forEach(option => {
+                    option.classList.remove('selected');
+                });
+                // Add selected class to the clicked option
+                this.classList.add('selected');
+                // Update the hidden input value
+                hiddenTanggalInput.value = this.getAttribute('data-date');
+            });
+            tanggalAntrianPicker.appendChild(dateOption);
+        }
+    }
+
+    // Initial render of date options
+    renderDateOptions();
+
+    // Re-select the `old('tanggal')` value if it exists after rendering options
+    if (hiddenTanggalInput.value) {
+        const previouslySelected = tanggalAntrianPicker.querySelector(`[data-date="${hiddenTanggalInput.value}"]`);
+        if (previouslySelected) {
+            tanggalAntrianPicker.querySelectorAll('.date-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            previouslySelected.classList.add('selected');
         }
     }
 });
