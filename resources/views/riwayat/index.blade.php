@@ -2,9 +2,10 @@
 
 @section('content')
 <div class="main-content">
-    <!-- Mobile Header -->
-    <div class="mobile-page-header">
-        <h2 class="page-title">Riwayat Kunjungan Pasien</h2>
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1><i class="fas fa-history"></i>Riwayat Kunjungan Pasien</h1>
+        <p>Lihat riwayat kunjungan dan status antrian yang tersedia</p>
     </div>
 
     <!-- Filter Dropdown -->
@@ -204,22 +205,35 @@
     z-index: 1000;
 }
 
-/* Mobile Header */
-.mobile-page-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 20px 15px;
-    color: white;
-    position: sticky;
-    top: 0;
-    z-index: 1100;
+/* Page Header - DIPERBAIKI */
+.page-header {
+    background: white;
+    padding: 25px 30px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    border-radius: 0 0 20px 20px;
 }
 
-.page-title {
-    font-size: 1.4rem;
-    font-weight: 700;
+.page-header h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.page-header h1 i {
+    font-size: 1.6rem;
+    color: #6c757d;
+}
+
+.page-header p {
+    font-size: 1rem;
     margin: 0;
-    text-align: center;
-    color: white;
+    color: #6c757d;
+    font-weight: 400;
 }
 
 /* Filter Container */
@@ -227,8 +241,7 @@
     padding: 15px;
     background: white;
     border-bottom: 1px solid #e3e6f0;
-    position: sticky;
-    top: 85px;
+    position: relative;
     z-index: 1500;
 }
 
@@ -394,19 +407,22 @@
     background: white;
 }
 
+/* Card Header - DIPERBAIKI */
 .mobile-header {
-    background: linear-gradient(135deg, #495057 0%, #343a40 100%);
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%); /* DIPERBAIKI: Warna lebih terang */
     padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid #e2e8f0; /* TAMBAHAN: Border untuk pemisah */
 }
 
 .mobile-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: white;
+    color: white !important; /* DIPERBAIKI: Memastikan warna putih */
     margin: 0;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* TAMBAHAN: Text shadow */
 }
 
 .mobile-count {
@@ -414,6 +430,9 @@
     font-weight: 600;
     padding: 6px 12px;
     border-radius: 20px;
+    background: white !important; /* DIPERBAIKI: Background putih */
+    color: #2d3748 !important; /* DIPERBAIKI: Teks gelap */
+    border: 1px solid #e2e8f0;
 }
 
 /* Desktop Table */
@@ -432,28 +451,32 @@
     border-radius: 8px;
 }
 
+/* Table Header - DIPERBAIKI */
 .table thead th {
-    background-color: #343a40;
-    color: white;
+    background-color: #2d3748 !important; /* DIPERBAIKI: Warna lebih terang */
+    color: white !important; /* DIPERBAIKI: Memastikan teks putih */
     font-size: 0.85rem;
     font-weight: 600;
     padding: 12px 8px;
-    border-bottom: 2px solid #495057;
+    border-bottom: 2px solid #4a5568; /* DIPERBAIKI: Border lebih terang */
     position: sticky;
     top: 0;
     z-index: 10;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* TAMBAHAN: Text shadow */
 }
 
 .table tbody td {
     font-size: 0.85rem;
     padding: 10px 8px;
     border-bottom: 1px solid #dee2e6;
+    color: #2d3748; /* DIPERBAIKI: Warna teks yang lebih kontras */
 }
 
 .badge {
     font-size: 0.75rem;
     padding: 4px 8px;
     border-radius: 4px;
+    font-weight: 500;
 }
 
 /* Mobile Cards */
@@ -527,7 +550,7 @@
     background: #f8f9fa;
     border-top: 1px solid #dee2e6;
     display: flex;
-    justify-content: between;
+    justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -593,14 +616,26 @@
     .custom-dropdown { z-index: 1501; }
     .dropdown-header { z-index: 1502; }
     .sort-container .dropdown-menu { z-index: 1503; }
-    .backdrop-overlay { z-index: 1450; }
     .mobile-page-header { z-index: 1100; }
 }
 
 @media (max-width: 576px) {
-    .mobile-page-header { padding: 15px 12px; }
-    .page-title { font-size: 1.2rem; }
-    .sort-container { padding: 12px; top: 75px; }
+    .page-header { 
+        padding: 20px 20px; 
+        border-radius: 0 0 15px 15px;
+        margin-bottom: 20px;
+    }
+    .page-header h1 { 
+        font-size: 1.5rem; 
+        gap: 10px;
+    }
+    .page-header h1 i { 
+        font-size: 1.3rem; 
+    }
+    .page-header p { 
+        font-size: 0.9rem; 
+    }
+    .sort-container { padding: 12px; }
     .dropdown-header { padding: 12px 15px; border-radius: 12px; }
     .dropdown-header.active { border-radius: 12px 12px 0 0; }
     .sort-container .dropdown-menu { border-radius: 0 0 12px 12px; }
@@ -614,8 +649,22 @@
 }
 
 @media (max-width: 375px) {
-    .page-title { font-size: 1.1rem; }
-    .sort-container { padding: 10px; top: 65px; }
+    .page-header { 
+        padding: 18px 15px; 
+        border-radius: 0 0 12px 12px;
+        margin-bottom: 15px;
+    }
+    .page-header h1 { 
+        font-size: 1.3rem; 
+        gap: 8px;
+    }
+    .page-header h1 i { 
+        font-size: 1.2rem; 
+    }
+    .page-header p { 
+        font-size: 0.85rem; 
+    }
+    .sort-container { padding: 10px; }
     .dropdown-header { padding: 10px 12px; border-radius: 10px; }
     .dropdown-header.active { border-radius: 10px 10px 0 0; }
     .sort-container .dropdown-menu { border-radius: 0 0 10px 10px; }

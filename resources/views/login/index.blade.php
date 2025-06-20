@@ -285,6 +285,40 @@
             }
         }
 
+        /* --- Password Toggle Icon inside input --- */
+        .password-input-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-input-wrapper .form-control {
+            padding-right: 3rem; /* Tambah padding kanan agar teks tidak tertutup ikon */
+        }
+
+        .password-input-wrapper .password-toggle {
+            position: absolute;
+            right: 0.75rem; /* Sesuaikan posisi ikon dari kanan input */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6c757d;
+            font-size: 1.1rem;
+            z-index: 2; /* Pastikan ikon di atas input */
+            padding: 0.25rem; /* Beri sedikit padding agar mudah diklik */
+            transition: color 0.3s ease;
+            user-select: none;
+        }
+        
+        .password-input-wrapper .password-toggle:hover {
+            color: #2c3e50;
+        }
+
+        /* Sembunyikan ikon mata secara default (saat input kosong) */
+        .password-input-wrapper .password-toggle.hidden {
+            display: none;
+        }
+        /* --- Akhir Password Toggle Icon inside input --- */
+
         /* Animation untuk form muncul */
         .login-container {
             animation: slideUp 0.6s ease-out;
@@ -315,6 +349,7 @@
     <!-- Logo Section -->
     <div class="logo-section">
         <img src="{{ asset('assets/img/logo/logoklinikpratama.png') }}" alt="Logo Klinik Pratama" class="logo-image">
+    </div>
 
     <!-- Login Header -->
     <div class="login-header">
@@ -354,6 +389,7 @@
                     placeholder="Enter your email"
                     required 
                     autofocus
+                    value="{{ old('email') }}"
                 >
                 @error('email')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -363,18 +399,23 @@
             <!-- Password Field -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input 
-                    type="password" 
-                    class="form-control @error('password') is-invalid @enderror" 
-                    name="password" 
-                    id="password" 
-                    placeholder="Enter your password"
-                    required
-                >
+                <div class="password-input-wrapper">
+                    <input 
+                        type="password" 
+                        class="form-control @error('password') is-invalid @enderror" 
+                        name="password" 
+                        id="password" 
+                        placeholder="Enter your password"
+                        required
+                    >
+                    <i class="fas fa-eye password-toggle hidden" id="passwordToggle"></i>
+                </div>
                 @error('password')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
+
+
 
             <!-- Login Button -->
             <button type="submit" class="btn btn-primary" id="loginBtn">
@@ -393,6 +434,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
+    // Password Toggle Functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const passwordInput = document.getElementById('password');
+        const passwordToggle = document.getElementById('passwordToggle');
+        
+        // Show/hide toggle icon based on input content
+        passwordInput.addEventListener('input', function() {
+            if (this.value.length > 0) {
+                passwordToggle.classList.remove('hidden');
+            } else {
+                passwordToggle.classList.add('hidden');
+            }
+        });
+        
+        // Toggle password visibility
+        passwordToggle.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            // Toggle icon
+            if (type === 'password') {
+                this.classList.remove('fa-eye-slash');
+                this.classList.add('fa-eye');
+            } else {
+                this.classList.remove('fa-eye');
+                this.classList.add('fa-eye-slash');
+            }
+        });
+    });
+
     // Form submission with loading state
     document.getElementById('loginForm').addEventListener('submit', function() {
         const loginBtn = document.getElementById('loginBtn');

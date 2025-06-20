@@ -477,7 +477,8 @@
                             <ul>
                                 <li id="reqLength"><i class="fas fa-times-circle"></i> Minimal 8 karakter</li>
                                 <li id="reqUppercase"><i class="fas fa-times-circle"></i> Huruf kapital (A-Z)</li>
-                                <li id="reqLowercase"><i class="fas fa-times-circle"></i> Huruf kecil (a-z)</li> <li id="reqNumber"><i class="fas fa-times-circle"></i> Angka (0-9)</li>
+                                <li id="reqLowercase"><i class="fas fa-times-circle"></i> Huruf kecil (a-z)</li>
+                                <li id="reqNumber"><i class="fas fa-times-circle"></i> Angka (0-9)</li>
                                 <li id="reqSpecial"><i class="fas fa-times-circle"></i> Karakter spesial (!@#$...)</li>
                             </ul>
                         </div>
@@ -583,6 +584,13 @@
         const registerBtn = document.getElementById('registerBtn');
         const togglePassword = document.getElementById('togglePassword');
         const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const birthDateInput = document.getElementById('birth_date');
+
+        // ✅ PERBAIKAN UTAMA: Set maximum date for birth date to today
+        if (birthDateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            birthDateInput.setAttribute('max', today);
+        }
 
         let isPasswordStrong = false; // Flag untuk status kekuatan password
         // Jumlah kriteria yang harus dipenuhi untuk 'Sangat Kuat'
@@ -716,7 +724,6 @@
         setupPasswordToggle(passwordInput, togglePassword);
         // Panggil fungsi untuk konfirmasi password
         setupPasswordToggle(confirmPasswordInput, toggleConfirmPassword);
-
 
         // Inisialisasi status tombol saat halaman dimuat (jika ada nilai old('password'))
         if (passwordInput.value.length > 0) {

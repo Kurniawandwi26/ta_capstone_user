@@ -61,7 +61,8 @@ class Antrian extends Model
             default => strtoupper($poli)
         };
         
-        // Cari nomor antrian terakhir untuk poli dan tanggal yang sama
+        // PERBAIKAN: Cari nomor antrian terakhir berdasarkan SEMUA antrian (termasuk yang dibatalkan)
+        // untuk menghindari duplicate key error
         $lastAntrian = self::where('poli', $poli)
                           ->where('tanggal', $tanggal)
                           ->orderBy('urutan', 'desc')
@@ -74,13 +75,19 @@ class Antrian extends Model
             $newNumber = 1;
         }
         
-        // Format: UMUM-1, BIDAN-2, dst
-        return $prefix . '-' . $newNumber;
+        // PASTIKAN nomor antrian unique dengan mengecek existing records
+        $noAntrian = $prefix . '-' . $newNumber;
+        while (self::where('no_antrian', $noAntrian)->exists()) {
+            $newNumber++;
+            $noAntrian = $prefix . '-' . $newNumber;
+        }
+        
+        return $noAntrian;
     }
 
     public static function generateUrutan($poli, $tanggal)
     {
-        // Cari urutan terakhir untuk poli dan tanggal yang sama
+        // Cari urutan terakhir untuk poli dan tanggal yang sama (SEMUA antrian)
         $lastUrutan = self::where('poli', $poli)
                          ->where('tanggal', $tanggal)
                          ->max('urutan');

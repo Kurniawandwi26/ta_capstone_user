@@ -30,9 +30,9 @@ class AntrianController extends Controller
      */
     public function create()
     {
-        // Cek apakah user sudah punya antrian aktif
+        // PERBAIKAN: Cek apakah user sudah punya antrian aktif (EXCLUDE yang dibatalkan)
         $existingAntrian = Antrian::where('user_id', Auth::id())
-                                 ->whereIn('status', ['menunggu', 'dipanggil'])
+                                 ->whereIn('status', ['menunggu', 'dipanggil']) // HANYA status aktif
                                  ->whereDate('tanggal', '>=', today())
                                  ->first();
 
@@ -72,15 +72,15 @@ class AntrianController extends Controller
         ]);
 
         try {
-            // Cek apakah user sudah punya antrian di tanggal yang sama
-            $existingAntrian = Antrian::where('user_id', Auth::id())
-                                     ->where('tanggal', $request->tanggal)
-                                     ->where('status', 'menunggu')
-                                     ->first();
+            // PERBAIKAN: Hanya cek apakah user punya antrian aktif yang belum selesai
+            $activeAntrian = Antrian::where('user_id', Auth::id())
+                                   ->whereIn('status', ['menunggu', 'dipanggil'])
+                                   ->whereDate('tanggal', '>=', today())
+                                   ->first();
 
-            if ($existingAntrian) {
+            if ($activeAntrian) {
                 return back()->withErrors([
-                    'tanggal' => 'Anda sudah memiliki antrian pada tanggal tersebut.'
+                    'error' => 'Anda masih memiliki antrian aktif. Harap selesaikan atau batalkan antrian tersebut terlebih dahulu.'
                 ])->withInput();
             }
 
@@ -107,8 +107,11 @@ class AntrianController extends Controller
             );
 
         } catch (\Exception $e) {
+            // Log error untuk debugging
+            \Log::error('Error creating antrian: ' . $e->getMessage());
+            
             return back()->withErrors([
-                'error' => 'Terjadi kesalahan saat membuat antrian. Silakan coba lagi.'
+                'error' => 'Terjadi kesalahan saat membuat antrian: ' . $e->getMessage()
             ])->withInput();
         }
     }
@@ -244,19 +247,16 @@ class AntrianController extends Controller
         ]);
 
         try {
-            // Cek duplikat tanggal jika user mengubah tanggal
-            if ($antrian->tanggal->format('Y-m-d') !== $request->tanggal) {
-                $existingAntrian = Antrian::where('user_id', Auth::id())
-                                         ->where('tanggal', $request->tanggal)
-                                         ->where('status', 'menunggu')
-                                         ->where('id', '!=', $id) // Exclude current antrian
-                                         ->first();
+            // PERBAIKAN: Cek apakah ada antrian aktif lain (selain antrian yang sedang diedit)
+            $conflictAntrian = Antrian::where('user_id', Auth::id())
+                                     ->whereIn('status', ['menunggu', 'dipanggil'])
+                                     ->where('id', '!=', $id) // Exclude current antrian
+                                     ->first();
 
-                if ($existingAntrian) {
-                    return back()->withErrors([
-                        'tanggal' => 'Anda sudah memiliki antrian lain pada tanggal tersebut.'
-                    ])->withInput();
-                }
+            if ($conflictAntrian) {
+                return back()->withErrors([
+                    'error' => 'Anda masih memiliki antrian aktif lainnya. Selesaikan atau batalkan antrian tersebut terlebih dahulu.'
+                ])->withInput();
             }
 
             $updateData = [
@@ -268,11 +268,17 @@ class AntrianController extends Controller
                 'tanggal' => $request->tanggal,
             ];
 
-            // Jika poli atau tanggal berubah, generate ulang nomor antrian
-            if ($antrian->poli !== $request->poli || $antrian->tanggal->format('Y-m-d') !== $request->tanggal) {
+            // PERBAIKAN: Hanya generate ulang nomor antrian jika BENAR-BENAR DIPERLUKAN
+            // Yaitu jika poli ATAU tanggal berubah
+            $poliChanged = $antrian->poli !== $request->poli;
+            $tanggalChanged = $antrian->tanggal->format('Y-m-d') !== $request->tanggal;
+
+            if ($poliChanged || $tanggalChanged) {
+                // Hanya generate ulang jika poli atau tanggal benar-benar berubah
                 $updateData['no_antrian'] = Antrian::generateNoAntrian($request->poli, $request->tanggal);
                 $updateData['urutan'] = Antrian::generateUrutan($request->poli, $request->tanggal);
             }
+            // Jika poli dan tanggal tidak berubah, TETAP pakai nomor antrian dan urutan lama
 
             $antrian->update($updateData);
 
