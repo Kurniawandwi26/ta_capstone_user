@@ -2,13 +2,11 @@
 
 @section('content')
 <div class="main-content">
-    <!-- Page Header -->
     <div class="page-header">
         <h1><i class="fas fa-history"></i>Riwayat Kunjungan Pasien</h1>
         <p>Lihat riwayat kunjungan dan status antrian yang tersedia</p>
     </div>
 
-    <!-- Filter Dropdown -->
     <div class="sort-container">
         <div class="custom-dropdown">
             <div class="dropdown-header" onclick="toggleFilterDropdown()">
@@ -52,8 +50,8 @@
         </div>
     </div>
 
-    <!-- Content -->
-    <div class="content-container">
+    {{-- Membungkus card dengan div history-grid untuk konsistensi layout --}}
+    <div class="history-grid"> 
         <div class="card mobile-card">
             <div class="card-header mobile-header">
                 <h5 class="mobile-title">
@@ -191,7 +189,7 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> {{-- Penutup div history-grid --}}
 </div>
 
 <div class="backdrop-overlay" id="backdrop-overlay"></div>
@@ -199,7 +197,8 @@
 <style>
 /* Base */
 .main-content {
-    padding: 0;
+    /* Perubahan di sini: tambahkan padding-top */
+    padding: 30px 30px 0 30px; /* Atas 30px, Kanan 30px, Bawah 0, Kiri 30px */
     background: #f8f9fa;
     min-height: 100vh;
     z-index: 1000;
@@ -208,10 +207,10 @@
 /* Page Header - DIPERBAIKI */
 .page-header {
     background: white;
-    padding: 25px 30px;
-    margin-bottom: 25px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-    border-radius: 0 0 20px 20px;
+    padding: 25px 30px; /* Menyesuaikan padding agar serasi dengan main-content */
+    margin-bottom: 30px; /* Jarak antara header halaman dan filter/konten utama */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); 
+    border-radius: 15px; 
 }
 
 .page-header h1 {
@@ -236,24 +235,30 @@
     font-weight: 400;
 }
 
-/* Filter Container */
+/* Filter Container - Modifikasi untuk jarak atas */
 .sort-container {
-    padding: 15px;
-    background: white;
-    border-bottom: 1px solid #e3e6f0;
+    padding: 0; /* Hapus padding internal */
+    background: transparent; /* Background transparan */
+    border-bottom: none; /* Menghapus border bottom */
     position: relative;
     z-index: 1500;
+    margin-bottom: 25px; /* Jarak antara filter dropdown dan card riwayat kunjungan */
 }
 
 .custom-dropdown {
     position: relative;
     z-index: 1501;
+    margin: 0 0px; /* Margin 0 karena main-content sudah memiliki padding */
+    background: white; /* Memberi background putih */
+    border-radius: 15px; /* Border radius agar terlihat seperti card */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* Menambahkan shadow */
+    padding: 0; /* Menghapus padding internal jika ada */
 }
 
 .dropdown-header {
-    background: #f8f9fa;
-    border: 2px solid #e3e6f0;
-    border-radius: 15px;
+    background: transparent; /* Menjadikan transparan karena background sudah di custom-dropdown */
+    border: none; /* Menghapus border */
+    border-radius: 15px; /* Menyesuaikan border-radius */
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
@@ -305,11 +310,11 @@
 /* Dropdown Menu */
 .sort-container .dropdown-menu {
     position: absolute;
-    top: calc(100% - 2px);
+    top: calc(100% - 0px); /* Sesuaikan posisi agar menyatu dengan card dropdown */
     left: 0;
     right: 0;
     background: white;
-    border: 2px solid #667eea;
+    border: none; /* Menghapus border */
     border-top: none;
     border-radius: 0 0 15px 15px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.15);
@@ -392,11 +397,18 @@
     visibility: visible;
 }
 
-/* Content */
+/* Content Container (Diganti dengan history-grid) */
 .content-container {
-    padding: 15px;
-    padding-top: 0;
+    padding: 0; /* Hapus padding, akan dihandle oleh main-content */
     z-index: 1000;
+}
+
+/* History Grid - BARU */
+.history-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Untuk satu card/element utama */
+    gap: 25px; /* Jika ada lebih dari satu card */
+    padding-bottom: 25px; /* Jarak bawah dari konten */
 }
 
 .mobile-card {
@@ -409,20 +421,20 @@
 
 /* Card Header - DIPERBAIKI */
 .mobile-header {
-    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%); /* DIPERBAIKI: Warna lebih terang */
+    background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
     padding: 18px 20px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid #e2e8f0; /* TAMBAHAN: Border untuk pemisah */
+    border-bottom: 2px solid #e2e8f0;
 }
 
 .mobile-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: white !important; /* DIPERBAIKI: Memastikan warna putih */
+    color: white !important;
     margin: 0;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* TAMBAHAN: Text shadow */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .mobile-count {
@@ -430,8 +442,8 @@
     font-weight: 600;
     padding: 6px 12px;
     border-radius: 20px;
-    background: white !important; /* DIPERBAIKI: Background putih */
-    color: #2d3748 !important; /* DIPERBAIKI: Teks gelap */
+    background: white !important;
+    color: #2d3748 !important;
     border: 1px solid #e2e8f0;
 }
 
@@ -453,23 +465,23 @@
 
 /* Table Header - DIPERBAIKI */
 .table thead th {
-    background-color: #2d3748 !important; /* DIPERBAIKI: Warna lebih terang */
-    color: white !important; /* DIPERBAIKI: Memastikan teks putih */
+    background-color: #2d3748 !important;
+    color: white !important;
     font-size: 0.85rem;
     font-weight: 600;
     padding: 12px 8px;
-    border-bottom: 2px solid #4a5568; /* DIPERBAIKI: Border lebih terang */
+    border-bottom: 2px solid #4a5568;
     position: sticky;
     top: 0;
     z-index: 10;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1); /* TAMBAHAN: Text shadow */
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 
 .table tbody td {
     font-size: 0.85rem;
     padding: 10px 8px;
     border-bottom: 1px solid #dee2e6;
-    color: #2d3748; /* DIPERBAIKI: Warna teks yang lebih kontras */
+    color: #2d3748;
 }
 
 .badge {
@@ -609,21 +621,46 @@
 
 /* Mobile Responsive */
 @media (max-width: 991.98px) {
-    .desktop-view { display: none; }
-    .mobile-view { display: block; }
+    .main-content {
+        padding: 20px 20px 0 20px; /* Sesuaikan untuk tablet/mobile */
     
-    .sort-container { z-index: 1500; }
-    .custom-dropdown { z-index: 1501; }
-    .dropdown-header { z-index: 1502; }
-    .sort-container .dropdown-menu { z-index: 1503; }
-    .mobile-page-header { z-index: 1100; }
+    .main-content {
+        padding: 0 20px; /* Sesuaikan padding untuk tablet/mobile */
+    }
+    .page-header {
+        padding: 20px 20px; /* Sesuaikan padding untuk tablet/mobile */
+        margin-bottom: 20px;
+    }
+    .sort-container { 
+        padding: 0; 
+        margin-bottom: 20px; /* Sesuaikan margin-bottom untuk tablet/mobile */
+    }
+    .custom-dropdown { 
+        margin: 0 0px; /* Kembali ke 0 untuk margin horizontal, padding dari main-content */
+        border-radius: 12px; /* Sesuaikan border-radius */
+    }
+    .dropdown-header { 
+        border-radius: 12px; /* Sesuaikan border-radius */
+    }
+    .dropdown-header.active {
+        border-radius: 12px 12px 0 0;
+    }
+    .sort-container .dropdown-menu { 
+        border-radius: 0 0 12px 12px; /* Sesuaikan border-radius */
+    }
+    .history-grid {
+        padding-bottom: 20px; /* Sesuaikan padding-bottom */
+    }
 }
 
 @media (max-width: 576px) {
+    .main-content {
+        padding: 15px 15px 0 15px; /* Sesuaikan untuk mobile kecil */
+    }
     .page-header { 
-        padding: 20px 20px; 
-        border-radius: 0 0 15px 15px;
-        margin-bottom: 20px;
+        padding: 18px 15px; 
+        border-radius: 0 0 12px 12px;
+        margin-bottom: 15px;
     }
     .page-header h1 { 
         font-size: 1.5rem; 
@@ -635,22 +672,25 @@
     .page-header p { 
         font-size: 0.9rem; 
     }
-    .sort-container { padding: 12px; }
-    .dropdown-header { padding: 12px 15px; border-radius: 12px; }
-    .dropdown-header.active { border-radius: 12px 12px 0 0; }
-    .sort-container .dropdown-menu { border-radius: 0 0 12px 12px; }
-    .content-container { padding: 12px; }
-    .mobile-header { padding: 15px; flex-direction: column; gap: 8px; }
-    .mobile-title { font-size: 1rem; }
-    .mobile-cards { padding: 8px; max-height: 60vh; }
-    .mobile-card-item { margin-bottom: 12px; border-radius: 10px; }
-    .patient-name { font-size: 1rem; }
-    .pagination-container { padding: 12px 15px; }
+    .sort-container { 
+        padding: 0; 
+        margin-bottom: 15px; /* Sesuaikan margin-bottom untuk mobile kecil */
+    }
+    .custom-dropdown { border-radius: 10px; } /* Sesuaikan border-radius */
+    .dropdown-header { padding: 12px 15px; border-radius: 10px; }
+    .dropdown-header.active { border-radius: 10px 10px 0 0; }
+    .sort-container .dropdown-menu { border-radius: 0 0 10px 10px; }
+    .history-grid {
+        padding-bottom: 15px; 
+    }
 }
 
 @media (max-width: 375px) {
+    .main-content {
+        padding: 10px 10px 0 10px; /* Sesuaikan untuk mobile sangat kecil */
+    }
     .page-header { 
-        padding: 18px 15px; 
+        padding: 18px 10px; 
         border-radius: 0 0 12px 12px;
         margin-bottom: 15px;
     }
@@ -664,13 +704,17 @@
     .page-header p { 
         font-size: 0.85rem; 
     }
-    .sort-container { padding: 10px; }
-    .dropdown-header { padding: 10px 12px; border-radius: 10px; }
-    .dropdown-header.active { border-radius: 10px 10px 0 0; }
-    .sort-container .dropdown-menu { border-radius: 0 0 10px 10px; }
-    .content-container { padding: 10px; }
-    .mobile-cards { padding: 5px; }
-    .patient-name { font-size: 0.95rem; }
+    .sort-container { 
+        padding: 0; 
+        margin-bottom: 10px; /* Sesuaikan margin-bottom untuk mobile sangat kecil */
+    }
+    .custom-dropdown { border-radius: 8px; } /* Sesuaikan border-radius */
+    .dropdown-header { padding: 10px 12px; border-radius: 8px; }
+    .dropdown-header.active { border-radius: 8px 8px 0 0; }
+    .sort-container .dropdown-menu { border-radius: 0 0 8px 8px; }
+    .history-grid {
+        padding-bottom: 10px; 
+    }
 }
 </style>
 

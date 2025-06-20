@@ -102,16 +102,29 @@
                     <div class="form-group full-width">
                         <label for="address" class="form-label">Alamat *</label>
                         <textarea class="form-textarea @error('address') is-invalid @enderror" 
-                                 id="address" 
-                                 name="address" 
-                                 rows="3" 
-                                 placeholder="Masukkan alamat lengkap"
-                                 readonly>{{ old('address', $user->address) }}</textarea>
+                                   id="address" 
+                                   name="address" 
+                                   rows="3" 
+                                   placeholder="Masukkan alamat lengkap"
+                                   readonly>{{ old('address', $user->address) }}</textarea>
                         @error('address')
                             <div class="form-error">{{ $message }}</div>
                         @enderror
 
-                        <small class="form-text text-danger">Jika ingin merubah data diri, silakan hubungi admin.</small>
+                        {{-- Konten baru untuk pesan admin --}}
+                        <div class="admin-contact-info">
+                            <small class="form-text text-danger">
+                                Jika ingin merubah data diri, silakan hubungi admin via WhatsApp: 
+                                <a href="https://wa.me/6289678784190?text=Halo%20admin%2C%0ASaya%20{{ Auth::user()->name }}%2C%20dengan%20NIK%20{{ Auth::user()->nomor_ktp }}%2C%20ingin%20mengajukan%20perubahan%20data%20diri%3A%0A%0AData%20yang%20ingin%20saya%20ubah%20(mohon%20sebutkan%20data%20apa%20diri%20apa%20yang%20ingin%20diubah.%20Misalnya%20%3A%20Nama%20Lengkap%2C%20Email%2C%20Nomor%20Telepon%2C%20Nomor%20KTP%2FNIK%2C%20Tanggal%20Lahir%2C%20Alamat)"
+   target="_blank" 
+   class="whatsapp-link">
+   <i class="fab fa-whatsapp"></i> 0896-7878-4190
+</a>
+                            </small>
+                            <small class="form-text text-danger admin-hours">
+                                Jam Operasional Admin: 08:00 WIB - 20:00 WIB
+                            </small>
+                        </div>
                     </div>
 
                 </div>
@@ -134,7 +147,6 @@
                 <div class="form-grid password-grid">
                     <div class="form-group">
                         <label for="current_password" class="form-label">Password Saat Ini *</label>
-                        {{-- Menggunakan wrapper baru untuk ikon mata --}}
                         <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input @error('current_password') is-invalid @enderror" 
@@ -150,7 +162,6 @@
 
                     <div class="form-group">
                         <label for="password" class="form-label">Password Baru *</label>
-                        {{-- Menggunakan wrapper baru untuk ikon mata dan feedback kekuatan --}}
                         <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input @error('password') is-invalid @enderror" 
@@ -180,7 +191,6 @@
 
                     <div class="form-group">
                         <label for="password_confirmation" class="form-label">Konfirmasi Password Baru *</label>
-                        {{-- Menggunakan wrapper baru untuk ikon mata --}}
                         <div class="password-input-wrapper">
                             <input type="password" 
                                    class="form-input" 
@@ -204,6 +214,7 @@
 </main>
 
 <style>
+/* CSS yang sudah ada */
 .page-header {
     background: white;
     padding: 25px;
@@ -231,7 +242,7 @@
     border-color: #dee2e6 !important;
     cursor: not-allowed !important;
     opacity: 0.8;
-    pointer-events: none;
+    pointer-events: none; /* Mencegah interaksi mouse */
 }
 
 
@@ -357,7 +368,7 @@
 }
 
 /* --- Start Password Input Group Styles (untuk ikon mata di dalam input) --- */
-.password-input-wrapper { /* Nama baru, menggantikan .password-input-group */
+.password-input-wrapper { 
     position: relative;
     width: 100%;
 }
@@ -366,7 +377,7 @@
     padding-right: 2.5rem; /* Beri ruang untuk ikon mata */
 }
 
-.password-toggle { /* Mengganti button.password-toggle */
+.password-toggle { 
     position: absolute;
     right: 0.75rem; /* Posisi ikon dari kanan input */
     top: 50%;
@@ -430,7 +441,6 @@
 /* --- Start Password Strength Indicator Styles (copied from register.blade.php) --- */
 .password-strength-feedback {
     margin-top: 0.5rem;
-    /* margin-bottom: 0.8rem; ini dihapus karena .password-input-wrapper sudah ada margin */
     padding: 0.5rem;
     border-radius: 8px;
     font-size: 0.85rem;
@@ -493,6 +503,40 @@
     color: #dc3545;
 }
 /* --- End Password Strength Indicator Styles --- */
+
+/* Style tambahan untuk link WhatsApp */
+.whatsapp-link {
+    color: #25D366; /* Warna hijau WhatsApp */
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex; /* Agar ikon dan teks sejajar */
+    align-items: center;
+    gap: 5px; /* Jarak antara ikon dan teks */
+    transition: color 0.2s ease;
+}
+
+.whatsapp-link:hover {
+    color: #1DA851; /* Warna hijau sedikit lebih gelap saat hover */
+    text-decoration: underline;
+}
+
+.whatsapp-link i.fab.fa-whatsapp {
+    font-size: 1.1em; /* Ukuran ikon sedikit lebih besar */
+}
+
+/* Penyesuaian baru untuk jam operasional */
+.admin-contact-info {
+    margin-top: 10px; /* Memberi sedikit jarak dari input di atasnya */
+}
+
+.admin-contact-info .form-text {
+    display: block; /* Memastikan setiap small di baris baru */
+}
+
+.admin-hours {
+    margin-top: 5px; /* Memberi jarak antara link WA dan jam operasional */
+    font-weight: normal; /* Pastikan tidak bold */
+}
 
 @media (max-width: 768px) {
     .form-grid,
@@ -565,8 +609,7 @@ function setupPasswordToggle(inputElement, toggleIconElement) {
 document.addEventListener('DOMContentLoaded', function() {
     const profileForm = document.getElementById('profileForm');
     const passwordForm = document.getElementById('passwordForm');
-    const profileBtn = document.getElementById('profileBtn'); // Pastikan ID ini ada di form profile
-    const passwordBtn = document.getElementById('passwordBtn');
+    const passwordBtn = document.getElementById('passwordBtn'); // Pastikan ID ini ada di form password
 
     // Get password elements for strength validation
     const newPasswordInput = document.getElementById('password'); // Ini adalah "Password Baru"
